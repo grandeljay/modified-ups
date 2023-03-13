@@ -1,0 +1,164 @@
+<?php
+
+namespace Grandeljay\Ups\Configuration;
+
+use RobinTheHood\ModifiedStdModule\Classes\CaseConverter;
+
+class Group
+{
+    public static function start(string $value, string $option): string
+    {
+        $key_without_module_name = substr($option, strlen(\grandeljayups::NAME) + 1);
+        $key_lisp                = CaseConverter::screamingToLisp($key_without_module_name);
+
+        ob_start();
+        ?>
+        <details class="<?= $key_lisp ?>">
+            <summary><?= $value ?></summary>
+            <div>
+        <?php
+        return ob_get_clean();
+    }
+
+    public static function end(string $value, string $option): string
+    {
+        ob_start();
+        ?>
+            </div>
+        </details>
+        <?php
+        return ob_get_clean();
+    }
+
+    /**
+     * Weight
+     */
+    public const SHIPPING_WEIGHT = 'SHIPPING_WEIGHT';
+
+    public static function shippingWeightStart(string $value, string $option): string
+    {
+        return self::start('<h2>' . $value . '</h2>', $option);
+    }
+
+    public static function shippingWeightEnd(string $value, string $option): string
+    {
+        return self::end($value, $option);
+    }
+
+    /**
+     * Methods
+     */
+    public const SHIPPING_METHODS = 'SHIPPING_METHODS';
+
+    public static function shippingMethodsStart(string $value, string $option): string
+    {
+        return self::start('<h2>' . $value . '</h2>', $option);
+    }
+
+    public static function shippingMethodsEnd(string $value, string $option): string
+    {
+        return self::end($value, $option);
+    }
+
+    /**
+     * Shipping
+     */
+    public const SHIPPING_NATIONAL = 'SHIPPING_NATIONAL';
+    public const SHIPPING_GROUP_A  = 'SHIPPING_GROUP_A';
+    public const SHIPPING_GROUP_B  = 'SHIPPING_GROUP_B';
+    public const SHIPPING_GROUP_C  = 'SHIPPING_GROUP_C';
+    public const SHIPPING_GROUP_D  = 'SHIPPING_GROUP_D';
+    public const SHIPPING_GROUP_E  = 'SHIPPING_GROUP_E';
+    public const SHIPPING_GROUP_F  = 'SHIPPING_GROUP_F';
+
+    public static function shippingStart(string $value, string $option): string
+    {
+        return self::start('<h2>' . $value . '</h2>', $option);
+    }
+
+    public static function shippingEnd(string $value, string $option): string
+    {
+        return self::end($value, $option);
+    }
+
+    /** Standard */
+    public static function shippingStandardStart(string $value, string $option): string
+    {
+        return self::start('<h3>' . $value . '</h3>', $option);
+    }
+
+    public static function shippingStandardEnd(string $value, string $option): string
+    {
+        return self::end($value, $option);
+    }
+
+    /** Expedited */
+    public static function shippingExpeditedStart(string $value, string $option): string
+    {
+        return self::start('<h3>' . $value . '</h3>', $option);
+    }
+
+    public static function shippingExpeditedEnd(string $value, string $option): string
+    {
+        return self::end($value, $option);
+    }
+
+    /** Saver */
+    public static function shippingSaverStart(string $value, string $option): string
+    {
+        return self::start('<h3>' . $value . '</h3>', $option);
+    }
+
+    public static function shippingSaverEnd(string $value, string $option): string
+    {
+        return self::end($value, $option);
+    }
+
+    /** 12:00 */
+    public static function shipping1200Start(string $value, string $option): string
+    {
+        return self::start('<h3>' . $value . '</h3>', $option);
+    }
+
+    public static function shipping1200End(string $value, string $option): string
+    {
+        return self::end($value, $option);
+    }
+
+    /** Express */
+    public static function shippingExpressStart(string $value, string $option): string
+    {
+        return self::start('<h3>' . $value . '</h3>', $option);
+    }
+
+    public static function shippingExpressEnd(string $value, string $option): string
+    {
+        return self::end($value, $option);
+    }
+
+    /** Plus */
+    public static function shippingPlusStart(string $value, string $option): string
+    {
+        return self::start('<h3>' . $value . '</h3>', $option);
+    }
+
+    public static function shippingPlusEnd(string $value, string $option): string
+    {
+        return self::end($value, $option);
+    }
+
+    /**
+     * Surcharges
+     */
+    public const SURCHARGES = 'SURCHARGES';
+
+    public static function surchargesStart(string $value, string $option): string
+    {
+        return self::start('<h2>' . $value . '</h2>', $option);
+    }
+
+    public static function surchargesEnd(string $value, string $option): string
+    {
+        return self::end($value, $option);
+    }
+}

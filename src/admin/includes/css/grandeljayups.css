@@ -1,0 +1,365 @@
+.modulbox {
+    hyphens: auto;
+}
+
+.modulbox :is(input, select, .cfg_select_option) {
+    --outline: 2px;
+}
+.modulbox :is(input, select):focus-visible {
+    outline: var(--outline) solid currentColor;
+}
+
+.modulbox :is(input, select):invalid {
+    --invalid: #ffdcdc;
+
+    background-color: var(--invalid) !important;
+}
+
+.modulbox input[type="number"] {
+    text-align: right;
+}
+
+.modulbox input:not(:is([type="submit"], [type="button"], [type="checkbox"])) {
+    width: 100% !important;
+    padding: 6px 4px;
+
+    box-sizing: border-box;
+
+    color: #000;
+    background-color: #fafafa;
+    border-color: #c6c6c6 #dadada #eaeaea;
+    border-radius: 2px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.modulbox :is(input, .cfg_select_option) ~ b {
+    margin-top: 1.8em;
+}
+
+/**
+ * Tabs
+ */
+details {
+    --border: 1px solid #a3a3a3;
+
+    transition:
+        0.2s ease border-color,
+        0.2s ease background-color;
+
+    position: relative;
+
+    margin-top: 0.6em;
+
+    border: var(--border);
+}
+details[open] {
+    background-color: transparent;
+}
+
+/** Summary */
+details > summary {
+    transition: 0.2s ease color;
+
+    display: flex;
+    gap: 0.4em;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    padding: 10px;
+
+    list-style: none;
+    font-size: 1em;
+    font-weight: bolder;
+
+    cursor: pointer;
+    user-select: none;
+    background-color: #dbdbdb;
+}
+details > summary::marker {
+    display: none;
+}
+details > summary::after {
+    transition: 0.2s ease transform;
+
+    width: 18px;
+    height: 18px;
+    content: '';
+
+    text-align: center;
+    background-image: url('../../images/arrow_right.gif');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+details[open] > summary {
+    border-bottom: var(--border);
+
+    color: #363636;
+    background-color: #e5e3e3;
+}
+details[open] > summary::after {
+    transform: rotate(90deg);
+}
+
+/** Heading */
+details > summary > :is(h1, h2, h3, h4, h5, h6) {
+    margin: 0;
+
+    line-height: inherit;
+    font-size: inherit;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+details[open] > summary > :is(h1, h2, h3, h4, h5, h6) {
+    white-space: normal;
+}
+details > summary > h1 {
+    font-size: 1.12em;
+}
+details > summary > h2 {
+    font-size: 1.10em;
+}
+details > summary > h3 {
+    font-size: 1.08em;
+}
+details > summary > h4 {
+    font-size: 1.06em;
+}
+details > summary > h5 {
+    font-size: 1.04em;
+}
+details > summary > h6 {
+    font-size: 1.02em;
+}
+
+/** Content */
+details > div {
+    padding: 10px;
+}
+
+details > div > :is(b, span.cfg_select_option) {
+    display: block;
+    width: max-content;
+}
+
+details > div > :is(br, b:empty),
+details > div > details + :is(br, b:empty) {
+    display: none;
+}
+details:not(:last-of-type) + :is(br, br + br) {
+    display: initial;
+}
+
+details.shipping-national-start > div > details:first-of-type {
+    margin-top: 20px;
+}
+
+/**
+ * Weight
+ */
+details.shipping-weight-start > div {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 4px 10px;
+    align-items: center;
+}
+
+details.shipping-weight-start > div {
+    align-items: flex-start;
+}
+
+details.shipping-weight-start > div > b {
+    grid-row-start: 1;
+
+    margin: 0 !important;
+}
+details.shipping-weight-start > div > input {
+    grid-row-start: 3;
+}
+
+/**
+ * Dialog
+ */
+dialog {
+    --columns: 2;
+    --border: #a3a3a3;
+
+    max-width: calc(100% - 10px);
+    margin: auto;
+    padding: 0;
+
+    border: 1px solid var(--border);
+    background-color: #eee;
+    box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.12),
+        0 2px 2px rgba(0, 0, 0, 0.12),
+        0 4px 4px rgba(0, 0, 0, 0.12),
+        0 8px 8px rgba(0, 0, 0, 0.12),
+        0 16px 16px rgba(0, 0, 0, 0.12);
+}
+@media (min-width: 1025px) {
+    dialog {
+        margin: auto 112px;
+    }
+}
+dialog[open] {
+    animation: 0.4s ease dialog_open;
+}
+@keyframes dialog_open {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+dialog#MODULE_SHIPPING_GRANDELJAYUPS_SURCHARGES_SURCHARGES {
+    --columns: 6;
+
+    margin: auto;
+}
+
+dialog .modulbox {
+    width: auto;
+    max-width: 800px;
+    margin: 0;
+}
+dialog#MODULE_SHIPPING_GRANDELJAYUPS_SURCHARGES_SURCHARGES .modulbox {
+    max-width: 1140px;
+}
+
+dialog .modulbox .contentTable,
+dialog .modulbox .contentTable:last-child {
+    border: none;
+}
+dialog .modulbox .contentTable:first-child {
+    border-bottom: 1px solid var(--border);
+}
+dialog .modulbox .contentTable:last-child {
+    margin-bottom: 0;
+}
+
+dialog .modulbox td.infoBoxContent {
+    padding: 0 !important;
+}
+dialog .modulbox td.infoBoxContent > .container {
+    max-height: 60vh;
+    padding: 10px;
+
+    overflow: auto;
+}
+
+/** Rows */
+dialog .row {
+    --gapX: 4px;
+    --gapY: 4px;
+    --gap: var(--gapY) var(--gapX);
+
+    display: flex;
+    gap: var(--gap);
+    justify-content: space-between;
+    margin-bottom: var(--gapY);
+}
+dialog .row:last-child {
+    margin-bottom: 0;
+}
+
+/** Columns */
+dialog .row > .column {
+    --columnWidth: calc(100% / var(--columns) + (var(--columns) * 2px) - var(--gapX));
+
+    flex: 0 0 var(--columnWidth);
+
+    display: flex;
+    gap: 4px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: baseline;
+    overflow: hidden;
+}
+dialog#MODULE_SHIPPING_GRANDELJAYUPS_SURCHARGES_SURCHARGES .row > .column {
+    align-items: center;
+}
+dialog#MODULE_SHIPPING_GRANDELJAYUPS_SURCHARGES_SURCHARGES .row:first-of-type > .column {
+    align-items: baseline;
+}
+
+dialog .row > .column.amount {
+    flex-basis: 14ch;
+}
+dialog .row > .column.type {
+    flex-basis: 14ch;
+}
+dialog .row > .column.per-package {
+    flex-basis: 14ch;
+}
+dialog .row > .column.for-weight {
+    flex-basis: 14ch;
+}
+dialog .row > .column.duration-start {
+    flex-basis: 16ch;
+}
+dialog .row > .column.duration-end {
+    flex-basis: 16ch;
+}
+
+dialog .row > .column > label {
+    width: 100%;
+}
+
+/** Inputs */
+dialog .modulbox .infoBoxContent :is(input, select) {
+    width: 100% !important;
+    height: auto;
+    flex: 1 1 auto;
+
+    /** To avoid outline being cut-off on focus */
+    margin: var(--outline);
+
+    box-sizing: border-box;
+}
+dialog .modulbox .infoBoxContent input[type="checkbox"] {
+    width: auto !important;
+    margin: 0 0 0 1px;
+    transform: scale(1.2);
+}
+
+/** Buttons */
+dialog > .buttons {
+    padding: 10px;
+}
+
+dialog button {
+    margin: 4px 4px 0 0;
+    padding: 6px 15px;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    background-color: #444;
+    border-radius: 4px;
+    border: 1px solid #333;
+    color: #ddd;
+    vertical-align: middle;
+    cursor: pointer;
+}
+dialog button[name="grandeljayups_add"] {
+    width: 100%;
+    max-width: 256px;
+    margin: auto;
+}
+
+/** Radio */
+dialog .cfg_select_option {
+    display: flex;
+}
+dialog .cfg_select_option > label {
+    flex: 1 1 50%;
+
+    user-select: none;
+    text-align: center;
+}

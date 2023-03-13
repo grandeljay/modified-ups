@@ -1,0 +1,16 @@
+{
+    "folders": [
+        {
+            "path": "."
+        },
+        {
+            "path": "../../HybridSupply/hybrid.supply/log"
+        }
+    ],
+    "settings": {
+        "editor.formatOnSave": true,
+        "intelephense.environment.includePaths": [
+            "C:\\laragon\\www\\HybridSupply\\hybrid.supply"
+        ]
+    }
+}

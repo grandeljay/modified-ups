@@ -1,0 +1,12 @@
+{
+    "/admin/includes/css/grandeljayups.css": "d4737d6b5e7f5b78c8f57025fb2c297a",
+    "/admin/includes/extra/javascript/grandeljayups.php": "66e81afb9cd24651150597e48e369d8b",
+    "/admin/includes/javascript/grandeljayups.js": "5c22a8d53e2c21fbadf5d94cb5bc1a03",
+    "/includes/modules/shipping/grandeljayups.php": "8cb30e21e9710ca78cb6d2fef260a10d",
+    "/lang/german/modules/shipping/grandeljayups.php": "8eafadc461b56abf43a379e865265246",
+    "/vendor-no-composer/Grandeljay/Ups/Configuration/Field.php": "410d2ef950b5f9f339e6dc21d6c15fb3",
+    "/vendor-no-composer/Grandeljay/Ups/Configuration/Group.php": "fcfecf6e4bba1c09adb39d1735e748a6",
+    "/vendor-no-composer/Grandeljay/Ups/Country.php": "17f19cc0a3c059f27ec6bd8716efc45b",
+    "/vendor-no-composer/Grandeljay/Ups/Parcel.php": "90a1e46d4567b20885f0c0ab56e5fb3d",
+    "/vendor-no-composer/Grandeljay/Ups/Quote.php": "205dc16c3e51545b8a11d257b25d78e8"
+}
