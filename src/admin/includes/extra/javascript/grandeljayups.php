@@ -21,7 +21,7 @@ $grandeljayups_admin_screen = array(
 
 parse_str($_SERVER['QUERY_STRING'] ?? '', $query_string);
 
-foreach ($grandeljaydhl_admin_screen as $key => $value) {
+foreach ($grandeljayups_admin_screen as $key => $value) {
     if (!isset($query_string[$key]) || $query_string[$key] !== $value) {
         return;
     }
