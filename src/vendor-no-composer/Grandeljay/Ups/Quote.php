@@ -29,8 +29,9 @@ class Quote
     private function getConfig(string $screaming_key): mixed
     {
         $camelKey = CaseConverter::screamingToCamel($screaming_key);
+        $value    = isset($this->config->$camelKey) ? $this->config->$camelKey : $camelKey;
 
-        return $this->config->$camelKey;
+        return $value;
     }
 
     public function exceedsMaximumWeight(): bool
