@@ -3,7 +3,6 @@
 namespace Grandeljay\Ups;
 
 use Grandeljay\Ups\Configuration\Group;
-use grandeljayups;
 use RobinTheHood\ModifiedStdModule\Classes\{Configuration, CaseConverter};
 
 class Quote
