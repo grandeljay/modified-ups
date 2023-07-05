@@ -18,6 +18,10 @@ class Quote
     {
         global $order;
 
+        if (!isset($order)) {
+            return;
+        }
+
         $this->config  = new Configuration($module);
         $this->country = new Country($order->delivery['country']);
         $this->boxes   = $this->getBoxes();
