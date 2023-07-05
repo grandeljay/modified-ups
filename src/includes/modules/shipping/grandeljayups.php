@@ -160,6 +160,14 @@ class grandeljayups extends StdModule
         /** */
     }
 
+    /**
+     * Used by modified to determine the cheapest shipping method. Should
+     * contain the return value of the `quote` method.
+     *
+     * @var array
+     */
+    public array $quotes = array();
+
     public function __construct()
     {
         parent::__construct(self::NAME);
@@ -260,6 +268,8 @@ class grandeljayups extends StdModule
 
         $this->addKey(Group::SURCHARGES . '_END');
         /** */
+
+        $this->quotes = $this->quote();
     }
 
     public function install()
