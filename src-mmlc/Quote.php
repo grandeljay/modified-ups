@@ -114,6 +114,8 @@ class Quote
                     $methods[] = $this->getShippingMethodNational($method);
                 }
             }
+
+            return $methods;
         }
         /** */
 
@@ -168,7 +170,7 @@ class Quote
 
             if (in_array($_SESSION['delivery_zone'], $countries, true)) {
                 foreach ($shipping_methods as $method) {
-                    $method_is_enabled = 'true' === $this->getConfig($group . '_' . $method);
+                    $method_is_enabled = 'true' === $this->getConfig(Group::SHIPPING_METHODS . '_' . $method);
 
                     if ($method_is_enabled) {
                         $methods[] = $this->getShippingMethodGroups($group, $method);
@@ -181,7 +183,7 @@ class Quote
         /** Default */
         if (0 === count($methods)) {
             foreach ($shipping_groups_methods[Group::SHIPPING_GROUP_F] as $method) {
-                $method_is_enabled = 'true' === $this->getConfig(Group::SHIPPING_GROUP_F . '_' . $method);
+                $method_is_enabled = 'true' === $this->getConfig(Group::SHIPPING_METHODS . '_' . $method);
 
                 if ($method_is_enabled) {
                     $methods[] = $this->getShippingMethodGroups(Group::SHIPPING_GROUP_F, $method);
@@ -198,9 +200,10 @@ class Quote
         $method_paket_national = array(
             'id'    => CaseConverter::screamingToLisp($method),
             'title' => sprintf(
-                'UPS %s (%s)' . '<!-- BREAK -->',
+                'UPS (%s)' . '<!-- BREAK -->' . '<strong>UPS %s</strong><br>%s',
+                $this->getNameBoxWeight(),
                 $this->getConfig('SHIPPING_METHOD_' . $method),
-                $this->getNameBoxWeight()
+                $this->getConfig(Group::SHIPPING_NATIONAL . '_START_TITLE')
             ),
             'cost'  => 0,
             'debug' => array(
@@ -273,15 +276,25 @@ class Quote
         $method_group = array(
             'id'    => CaseConverter::screamingToLisp($method),
             'title' => sprintf(
-                'UPS %s (%s)' . '<!-- BREAK -->',
+                'UPS %1$s (%2$s)' . '<!-- BREAK -->' . '<strong>UPS %1$s</strong><br>%3$s',
                 $this->getConfig('SHIPPING_METHOD_' . $method),
-                $this->getNameBoxWeight()
+                $this->getNameBoxWeight(),
+                $this->getConfig($group . '_START_TITLE')
             ),
             'cost'  => 0,
             'debug' => array(
                 'calculations' => array(),
             ),
         );
+
+        if ('STANDARD' === $method) {
+            $method_group['title'] = sprintf(
+                'UPS (%2$s)' . '<!-- BREAK -->' . '<strong>UPS %1$s</strong><br>%3$s',
+                $this->getConfig('SHIPPING_METHOD_' . $method),
+                $this->getNameBoxWeight(),
+                $this->getConfig($group . '_START_TITLE')
+            );
+        }
 
         $shipping_costs_group = json_decode($this->getConfig($group . '_' . $method . '_COSTS'), true);
 
