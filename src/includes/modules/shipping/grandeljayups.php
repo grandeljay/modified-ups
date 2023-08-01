@@ -736,12 +736,18 @@ class grandeljayups extends StdModule
         /** */
     }
 
-    public function quote(): array
+    /**
+     * Used by modified to show shipping costs. Will be ignored if the value is
+     * not an array.
+     *
+     * @var ?array
+     */
+    public function quote(): ?array
     {
         $quote  = new Quote(self::NAME);
         $quotes = $quote->getQuote();
 
-        if (isset($quotes['methods']) && count($quotes['methods']) > 0 && !$quote->exceedsMaximumWeight()) {
+        if (is_array($quotes) && !$quote->exceedsMaximumWeight()) {
             $this->quotes = $quotes;
         }
 

@@ -691,8 +691,12 @@ class Quote
         return implode(', ', $boxes_weight_text);
     }
 
-    public function getQuote(): array
+    public function getQuote(): ?array
     {
+        if (empty($this->methods)) {
+            return null;
+        }
+
         $quote = array(
             'id'      => 'grandeljayups',
             'module'  => sprintf(
