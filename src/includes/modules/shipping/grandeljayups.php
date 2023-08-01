@@ -743,9 +743,7 @@ class grandeljayups extends StdModule
         $quote = new Quote(self::NAME);
 
         if ($quote->exceedsMaximumWeight()) {
-            return array(
-                'methods' => array(),
-            );
+            return $quote->getEmpty();
         }
 
         return $quote->getQuote();
