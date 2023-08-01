@@ -56,17 +56,6 @@ class Quote
         return false;
     }
 
-    public function getEmpty(): array
-    {
-        $emptyQuote = array(
-            'module'  => \grandeljayups::class,
-            'methods' => array(),
-        );
-
-        return $emptyQuote;
-    }
-
-
     public function getBoxes(): array
     {
         global $order;
