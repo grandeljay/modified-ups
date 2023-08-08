@@ -208,9 +208,9 @@ class Quote
         $method_paket_national = array(
             'id'    => CaseConverter::screamingToLisp($method),
             'title' => sprintf(
-                'UPS (%s)' . '<!-- BREAK -->' . '<strong>UPS %s</strong><br>%s',
-                $this->getNameBoxWeight(),
+                'UPS %1$s (%2$s)' . '<!-- BREAK -->' . '<strong>UPS %1$s</strong><br>%3$s',
                 $this->getConfig('SHIPPING_METHOD_' . $method),
+                $this->getNameBoxWeight(),
                 $this->getConfig(Group::SHIPPING_NATIONAL . '_START_TITLE')
             ),
             'cost'  => 0,
@@ -294,15 +294,6 @@ class Quote
                 'calculations' => array(),
             ),
         );
-
-        if ('STANDARD' === $method) {
-            $method_group['title'] = sprintf(
-                'UPS (%2$s)' . '<!-- BREAK -->' . '<strong>UPS %1$s</strong><br>%3$s',
-                $this->getConfig('SHIPPING_METHOD_' . $method),
-                $this->getNameBoxWeight(),
-                $this->getConfig($group . '_START_TITLE')
-            );
-        }
 
         $shipping_costs_group = json_decode($this->getConfig($group . '_' . $method . '_COSTS'), true);
 

@@ -409,7 +409,7 @@ class grandeljayups extends StdModule
          * Group C
          */
         $group_c_title     = $this->getConfig(Group::SHIPPING_GROUP_C . '_START_TITLE');
-        $group_c_countries = 'BG, CY, EE, ES, FI, GB - NIR, GR, IC, IE, LT, LV, MT, SE, SK';
+        $group_c_countries = 'BG, CY, EE, FI, GR, IC, IE, LT, LV, MT, SE, SK';
         $group_c_costs     = Field::getShippingCountryGroupCCosts();
 
         $this->addConfiguration(Group::SHIPPING_GROUP_C . '_START', $group_c_title, 6, 1, self::class . '::setFunction(');
