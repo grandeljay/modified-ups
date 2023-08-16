@@ -11,7 +11,7 @@
  * @phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
  */
 
-use Grandeljay\Ups\{Country, Parcel, Quote};
+use Grandeljay\Ups\Quote;
 use Grandeljay\Ups\Configuration\{Group, Field};
 use RobinTheHood\ModifiedStdModule\Classes\{StdModule, CaseConverter};
 

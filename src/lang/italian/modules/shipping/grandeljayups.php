@@ -154,7 +154,7 @@ $translations_groups = array();
 
 foreach (grandeljayups::$methods_international as $group) {
     $group_letter = substr($group, -1, 1);
-    $group_title  = sprintf('Ländergruppe %s', $group_letter);
+    $group_title  = sprintf('Gruppo di Paesi %s', $group_letter);
 
     $translations_groups = array_merge(
         $translations_groups,
