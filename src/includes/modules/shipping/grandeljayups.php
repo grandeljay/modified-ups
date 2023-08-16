@@ -21,7 +21,7 @@ use RobinTheHood\ModifiedStdModule\Classes\{StdModule, CaseConverter};
 class grandeljayups extends StdModule
 {
     public const NAME    = 'MODULE_SHIPPING_GRANDELJAYUPS';
-    public const VERSION = '0.2.8';
+    public const VERSION = '0.3.8';
 
     public static array $methods_international = array(
         Group::SHIPPING_GROUP_A,
