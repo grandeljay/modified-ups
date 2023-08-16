@@ -175,6 +175,11 @@ class grandeljayups extends StdModule
         $this->checkForUpdate(true);
 
         /**
+         * Sort Order
+         */
+        $this->addkey('SORT_ORDER');
+
+        /**
          * Debug
          */
         $this->addKey('DEBUG_ENABLE');
@@ -279,6 +284,11 @@ class grandeljayups extends StdModule
          */
         $this->addConfiguration('ALLOWED', '', 6, 1);
         /** */
+
+        /**
+         * Sort Order
+         */
+        $this->addConfiguration('SORT_ORDER', 0, 6, 1);
 
         /**
          * Debug
@@ -641,6 +651,11 @@ class grandeljayups extends StdModule
          */
         $this->removeConfiguration('ALLOWED');
         /** */
+
+        /**
+         * Sort Order
+         */
+        $this->removeConfiguration('SORT_ORDER');
 
         /**
          * Debug

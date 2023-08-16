@@ -39,6 +39,10 @@ $translations_general = array(
     'ALLOWED_TITLE'             => '',
     'ALLOWED_DESC'              => '',
 
+    /** Sort Order */
+    'SORT_ORDER_TITLE'                                                   => 'Ordinamento',
+    'SORT_ORDER_DESC'                                                    => 'Determina l\'ordinamento nell\'Admin e nel Checkout. I numeri più bassi vengono visualizzati per primi.',
+
     /** Debug */
     'DEBUG_ENABLE_TITLE'        => 'Modalità Debug',
     'DEBUG_ENABLE_DESC'         => 'Attivare la modalità di debug? Vengono visualizzate informazioni aggiuntive, ad esempio come sono stati calcolati i costi di spedizione. Visibile solo per gli amministratori.',

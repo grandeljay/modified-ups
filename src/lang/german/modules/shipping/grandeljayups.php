@@ -39,6 +39,10 @@ $translations_general = array(
     'ALLOWED_TITLE'             => '',
     'ALLOWED_DESC'              => '',
 
+    /** Sort Order */
+    'SORT_ORDER_TITLE'          => 'Sortierreihenfolge',
+    'SORT_ORDER_DESC'           => 'Bestimmt die Sortierung im Admin und Checkout. Niedrigste Zahlen werden zuerst angezeigt.',
+
     /** Debug */
     'DEBUG_ENABLE_TITLE'        => 'Debug-Modus',
     'DEBUG_ENABLE_DESC'         => 'Debug-Modus aktivieren? Es werden zusätzliche Informationen angezeigt z. B. wie die Versandkosten errechnet wurden. Nur für Admins sichtbar.',
