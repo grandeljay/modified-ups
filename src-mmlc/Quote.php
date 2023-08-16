@@ -42,7 +42,7 @@ class Quote
         global $order;
 
         if (null === $order) {
-            return false;
+            return true;
         }
 
         $shipping_weight_max = $this->getConfig(Group::SHIPPING_WEIGHT . '_MAX');
@@ -684,7 +684,7 @@ class Quote
 
     public function getQuote(): ?array
     {
-        if (empty($this->methods)) {
+        if (empty($this->methods) || $this->exceedsMaximumWeight()) {
             return null;
         }
 
