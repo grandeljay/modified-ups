@@ -40,7 +40,6 @@ class Parcel
 
     public function __construct()
     {
-        $this->weight = (float) \SHIPPING_BOX_WEIGHT;
     }
 
     /**

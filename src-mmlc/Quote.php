@@ -72,7 +72,7 @@ class Quote
                 $product_weight = (float) $product['weight'];
 
                 /** Find a box empty enough to fit product */
-                foreach ($boxes as &$box) {
+                foreach ($boxes as $box) {
                     $box_weight          = $box->getWeight();
                     $box_can_fit_product = $box_weight + $product_weight < $shipping_weight_ideal;
 
@@ -82,9 +82,6 @@ class Quote
                         continue 2;
                     }
                 }
-
-                /** Break the reference binding so $box can be assigned a new value */
-                unset($box);
 
                 /** Add product to a new box */
                 $box = new Parcel();
