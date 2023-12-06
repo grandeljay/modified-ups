@@ -168,6 +168,13 @@ class grandeljayups extends StdModule
      */
     public array $quotes = array();
 
+    /**
+     * Used to calculate the tax.
+     *
+     * @var int
+     */
+    public int $tax_class = 1;
+
     public function __construct()
     {
         parent::__construct(self::NAME);
