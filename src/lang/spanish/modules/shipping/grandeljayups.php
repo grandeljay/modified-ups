@@ -104,10 +104,10 @@ require_once DIR_FS_CATALOG . 'includes/modules/shipping/grandeljayups.php';
  * National
  */
 $translations_national = array(
-    Group::SHIPPING_NATIONAL . '_START_TITLE'   => 'Transporte marítimo nacional',
+    Group::SHIPPING_NATIONAL . '_START_TITLE'   => 'Envíos nacionales',
     Group::SHIPPING_NATIONAL . '_START_DESC'    => 'Aquí encontrará todos los ajustes relativos al envío nacional. Haga clic en el grupo para abrir los ajustes.',
 
-    Group::SHIPPING_NATIONAL . '_COUNTRY_TITLE' => 'Transporte marítimo nacional',
+    Group::SHIPPING_NATIONAL . '_COUNTRY_TITLE' => 'Envíos nacionales',
     Group::SHIPPING_NATIONAL . '_COUNTRY_DESC'  => sprintf(
         'La ubicación de la tienda en línea es actualmente %s y puede ajustarse en %s.',
         sprintf(
