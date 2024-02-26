@@ -10,8 +10,8 @@ class Quote
     private Configuration $config;
     private Country $country;
     private float $total_weight = 0;
-    private array $boxes        = array();
-    private array $methods      = array();
+    private array $boxes        = [];
+    private array $methods      = [];
 
     public function __construct(string $module)
     {
@@ -60,7 +60,7 @@ class Quote
     {
         global $order;
 
-        $boxes                 = array();
+        $boxes                 = [];
         $shipping_weight_ideal = $this->getConfig(Group::SHIPPING_WEIGHT . '_IDEAL');
 
         if (null === $order) {
@@ -103,19 +103,19 @@ class Quote
 
     private function getShippingMethods(): array
     {
-        $methods = array();
+        $methods = [];
 
         /** National */
         $shipping_is_national = intval(\STORE_COUNTRY) === $this->country->getCountryID();
 
         if ($shipping_is_national) {
-            $shipping_national_methods = array(
+            $shipping_national_methods = [
                 'STANDARD',
                 'SAVER',
                 '1200',
                 'EXPRESS',
                 'PLUS',
-            );
+            ];
 
             foreach ($shipping_national_methods as $method) {
                 $method_is_enabled = 'true' === $this->getConfig(Group::SHIPPING_METHODS . '_' . $method);
@@ -130,44 +130,44 @@ class Quote
         /** */
 
         /** Groups */
-        $shipping_groups_methods = array(
-            Group::SHIPPING_GROUP_A => array(
+        $shipping_groups_methods = [
+            Group::SHIPPING_GROUP_A => [
                 'STANDARD',
                 'SAVER',
                 'EXPRESS',
                 'PLUS',
-            ),
-            Group::SHIPPING_GROUP_B => array(
+            ],
+            Group::SHIPPING_GROUP_B => [
                 'STANDARD',
                 'SAVER',
                 'EXPRESS',
                 'PLUS',
-            ),
-            Group::SHIPPING_GROUP_C => array(
+            ],
+            Group::SHIPPING_GROUP_C => [
                 'STANDARD',
                 'SAVER',
                 'EXPRESS',
                 'PLUS',
-            ),
-            Group::SHIPPING_GROUP_D => array(
+            ],
+            Group::SHIPPING_GROUP_D => [
                 'STANDARD',
                 'SAVER',
                 'EXPRESS',
                 'PLUS',
-            ),
-            Group::SHIPPING_GROUP_E => array(
+            ],
+            Group::SHIPPING_GROUP_E => [
                 'EXPEDITED',
                 'SAVER',
                 'EXPRESS',
                 'PLUS',
-            ),
-            Group::SHIPPING_GROUP_F => array(
+            ],
+            Group::SHIPPING_GROUP_F => [
                 'EXPEDITED',
                 'SAVER',
                 'EXPRESS',
                 'PLUS',
-            ),
-        );
+            ],
+        ];
 
         foreach ($shipping_groups_methods as $group => $shipping_methods) {
             $countries_field = $this->getConfig($group . '_COUNTRIES');
@@ -207,7 +207,7 @@ class Quote
 
     private function getShippingMethodNational(string $method): array
     {
-        $method_paket_national = array(
+        $method_paket_national = [
             'id'    => CaseConverter::screamingToLisp($method),
             'title' => sprintf(
                 'UPS %1$s (%2$s)' . '<!-- BREAK -->' . '<strong>UPS %1$s</strong><br>%3$s',
@@ -216,10 +216,10 @@ class Quote
                 $this->getConfig(Group::SHIPPING_NATIONAL . '_START_TITLE')
             ),
             'cost'  => 0,
-            'debug' => array(
-                'calculations' => array(),
-            ),
-        );
+            'debug' => [
+                'calculations' => [],
+            ],
+        ];
 
         $shipping_national_costs = json_decode($this->getConfig(Group::SHIPPING_NATIONAL . '_' . $method . '_COSTS'), true);
 
@@ -283,7 +283,7 @@ class Quote
 
     private function getShippingMethodGroups(string $group, string $method): array
     {
-        $method_group = array(
+        $method_group = [
             'id'    => CaseConverter::screamingToLisp($method),
             'title' => sprintf(
                 'UPS %1$s (%2$s)' . '<!-- BREAK -->' . '<strong>UPS %1$s</strong><br>%3$s',
@@ -292,10 +292,10 @@ class Quote
                 $this->getConfig($group . '_START_TITLE')
             ),
             'cost'  => 0,
-            'debug' => array(
-                'calculations' => array(),
-            ),
-        );
+            'debug' => [
+                'calculations' => [],
+            ],
+        ];
 
         $shipping_costs_group = json_decode($this->getConfig($group . '_' . $method . '_COSTS'), true);
 
@@ -371,7 +371,7 @@ class Quote
          * Surcharges
          */
         $surcharges_config = json_decode($this->getConfig('SURCHARGES_SURCHARGES'), true);
-        $surcharges        = array();
+        $surcharges        = [];
         $surcharges_update = false;
 
         foreach ($this->methods as &$method) {
@@ -646,7 +646,7 @@ class Quote
         /**
          * Box weights
          */
-        $boxes_weight = array();
+        $boxes_weight = [];
 
         foreach ($this->boxes as $box) {
             $key = $box->getWeight() . ' kg';
@@ -658,7 +658,7 @@ class Quote
             }
         }
 
-        $boxes_weight_text = array();
+        $boxes_weight_text = [];
 
         foreach ($boxes_weight as $weight_text => $quantity) {
             preg_match('/[\d+\.]+/', $weight_text, $weight_matches);
@@ -673,12 +673,12 @@ class Quote
         }
 
         if ('true' !== $debug_is_enabled || !$user_is_admin) {
-            $boxes_weight_text = array(
+            $boxes_weight_text = [
                 sprintf(
                     '%s kg',
                     round($this->total_weight, 2)
                 ),
-            );
+            ];
         }
 
         return implode(', ', $boxes_weight_text);
@@ -690,14 +690,14 @@ class Quote
             return null;
         }
 
-        $quote = array(
+        $quote = [
             'id'      => 'grandeljayups',
             'module'  => sprintf(
                 'UPS (%s)',
                 $this->getNameBoxWeight()
             ),
             'methods' => $this->methods,
-        );
+        ];
 
         return $quote;
     }
