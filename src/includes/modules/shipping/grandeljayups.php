@@ -762,12 +762,15 @@ class grandeljayups extends StdModule
      * Used by modified to show shipping costs. Will be ignored if the value is
      * not an array.
      *
-     * @var ?array
+     * @param string $method_id The selected method during checkout. Only return
+     *                          this method when it is set.
+     *
+     * @return array|null
      */
-    public function quote(): ?array
+    public function quote(string $method_id = ''): ?array
     {
         $quote  = new Quote(self::NAME);
-        $quotes = $quote->getQuote();
+        $quotes = $quote->getQuote($method_id);
 
         if (is_array($quotes) && !$quote->exceedsMaximumWeight()) {
             $this->quotes = $quotes;

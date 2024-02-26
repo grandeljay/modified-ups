@@ -684,10 +684,22 @@ class Quote
         return implode(', ', $boxes_weight_text);
     }
 
-    public function getQuote(): ?array
+    public function getQuote(string $method_id): ?array
     {
         if (empty($this->methods) || $this->exceedsMaximumWeight()) {
             return null;
+        }
+
+        $methods = $this->methods;
+
+        if ('' !== $method_id) {
+            $methods = [];
+
+            foreach ($this->methods as $method) {
+                if ($method_id === $method['id']) {
+                    $methods[] = $method;
+                }
+            }
         }
 
         $quote = [
@@ -696,7 +708,7 @@ class Quote
                 'UPS (%s)',
                 $this->getNameBoxWeight()
             ),
-            'methods' => $this->methods,
+            'methods' => $methods,
         ];
 
         return $quote;
