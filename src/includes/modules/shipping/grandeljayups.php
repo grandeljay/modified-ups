@@ -23,60 +23,60 @@ class grandeljayups extends StdModule
     public const NAME    = 'MODULE_SHIPPING_GRANDELJAYUPS';
     public const VERSION = '0.3.10';
 
-    public static array $methods_international = array(
+    public static array $methods_international = [
         Group::SHIPPING_GROUP_A,
         Group::SHIPPING_GROUP_B,
         Group::SHIPPING_GROUP_C,
         Group::SHIPPING_GROUP_D,
         Group::SHIPPING_GROUP_E,
         Group::SHIPPING_GROUP_F,
-    );
+    ];
 
-    public static array $methods = array(
-        Group::SHIPPING_NATIONAL => array(
+    public static array $methods = [
+        Group::SHIPPING_NATIONAL => [
             'STANDARD',
             'SAVER',
             '1200',
             'EXPRESS',
             'PLUS',
-        ),
-        Group::SHIPPING_GROUP_A  => array(
+        ],
+        Group::SHIPPING_GROUP_A  => [
             'STANDARD',
             'SAVER',
             'EXPRESS',
             'PLUS',
-        ),
-        Group::SHIPPING_GROUP_B  => array(
+        ],
+        Group::SHIPPING_GROUP_B  => [
             'STANDARD',
             'SAVER',
             'EXPRESS',
             'PLUS',
-        ),
-        Group::SHIPPING_GROUP_C  => array(
+        ],
+        Group::SHIPPING_GROUP_C  => [
             'STANDARD',
             'SAVER',
             'EXPRESS',
             'PLUS',
-        ),
-        Group::SHIPPING_GROUP_D  => array(
+        ],
+        Group::SHIPPING_GROUP_D  => [
             'STANDARD',
             'SAVER',
             'EXPRESS',
             'PLUS',
-        ),
-        Group::SHIPPING_GROUP_E  => array(
+        ],
+        Group::SHIPPING_GROUP_E  => [
             'EXPEDITED',
             'SAVER',
             'EXPRESS',
             'PLUS',
-        ),
-        Group::SHIPPING_GROUP_F  => array(
+        ],
+        Group::SHIPPING_GROUP_F  => [
             'EXPEDITED',
             'SAVER',
             'EXPRESS',
             'PLUS',
-        ),
-    );
+        ],
+    ];
 
     public static function setFunction(string $value, string $option): string
     {
@@ -111,14 +111,14 @@ class grandeljayups extends StdModule
 
             /** Methods */
             $option_short = substr($option, strlen(self::NAME) + 1);
-            $methods      = array(
+            $methods      = [
                 Group::SHIPPING_METHODS . '_STANDARD',
                 Group::SHIPPING_METHODS . '_SAVER',
                 Group::SHIPPING_METHODS . '_1200',
                 Group::SHIPPING_METHODS . '_EXPRESS',
                 Group::SHIPPING_METHODS . '_PLUS',
                 Group::SHIPPING_METHODS . '_EXPEDITED',
-            );
+            ];
 
             if (in_array($option_short, $methods, true)) {
                 $method_name = 'shippingMethods';
@@ -166,7 +166,7 @@ class grandeljayups extends StdModule
      *
      * @var array
      */
-    public array $quotes = array();
+    public array $quotes = [];
 
     /**
      * Used to calculate the tax.
@@ -551,22 +551,22 @@ class grandeljayups extends StdModule
         $this->addConfiguration(Group::SURCHARGES . '_START', $this->getConfig(Group::SURCHARGES . '_START_TITLE'), 6, 1, self::class . '::setFunction(');
 
         $surcharges = json_encode(
-            array(
-                array(
+            [
+                [
                     'name'                         => 'Treibstoffzuschlag',
                     'surcharge'                    => 18.25,
                     'type'                         => 'percent',
                     'configuration[per-package-0]' => 'false',
                     'for-method'                   => 'standard',
-                ),
-                array(
+                ],
+                [
                     'name'                         => 'Treibstoffzuschlag',
                     'surcharge'                    => 29.25,
                     'type'                         => 'percent',
                     'configuration[per-package-1]' => 'false',
                     'for-method'                   => 'all-others',
-                ),
-                array(
+                ],
+                [
                     'name'                         => 'Peak Handhabung',
                     'surcharge'                    => 4.90,
                     'type'                         => 'fixed',
@@ -574,8 +574,8 @@ class grandeljayups extends StdModule
                     'for-weight'                   => 32,
                     'duration-start'               => date('Y') . '-10-31',
                     'duration-end'                 => date('Y') + 1 . '-01-15',
-                ),
-                array(
+                ],
+                [
                     'name'                         => 'Peak großes Paket',
                     'surcharge'                    => 53,
                     'type'                         => 'fixed',
@@ -583,50 +583,50 @@ class grandeljayups extends StdModule
                     'for-weight'                   => 40,
                     'duration-start'               => date('Y') . '-10-31',
                     'duration-end'                 => date('Y') + 1 . '-01-15',
-                ),
-                array(
+                ],
+                [
                     'name'                         => 'Zuschlag Handhabung',
                     'surcharge'                    => 10,
                     'type'                         => 'fixed',
                     'configuration[per-package-4]' => 'true',
                     'for-weight'                   => 32,
-                ),
-                array(
+                ],
+                [
                     'name'                         => 'Zuschlag großes Paket',
                     'surcharge'                    => 71.5,
                     'type'                         => 'fixed',
                     'configuration[per-package-5]' => 'true',
                     'for-weight'                   => 40,
-                ),
-            ),
+                ],
+            ],
             \JSON_UNESCAPED_UNICODE
         );
 
         $this->addConfiguration(Group::SURCHARGES . '_SURCHARGES', $surcharges, 6, 1, self::class . '::setFunction(');
 
         $pick_and_pack = json_encode(
-            array(
-                array(
+            [
+                [
                     'weight-max'   => 1.00,
                     'weight-costs' => 1.30,
-                ),
-                array(
+                ],
+                [
                     'weight-max'   => 5.00,
                     'weight-costs' => 1.60,
-                ),
-                array(
+                ],
+                [
                     'weight-max'   => 10.00,
                     'weight-costs' =>  2.00,
-                ),
-                array(
+                ],
+                [
                     'weight-max'   => 20.00,
                     'weight-costs' =>  2.60,
-                ),
-                array(
+                ],
+                [
                     'weight-max'   => 60.00,
                     'weight-costs' =>  3.00,
-                ),
-            ),
+                ],
+            ],
         );
 
         $this->addConfiguration(Group::SURCHARGES . '_PICK_AND_PACK', $pick_and_pack, 6, 1, self::class . '::setFunction(');
