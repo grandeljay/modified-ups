@@ -208,17 +208,15 @@ class Quote
     private function getShippingMethodNational(string $method): array
     {
         $method_paket_national = [
-            'id'    => CaseConverter::screamingToLisp($method),
-            'title' => sprintf(
+            'id'           => CaseConverter::screamingToLisp($method),
+            'title'        => sprintf(
                 'UPS %1$s (%2$s)' . '<!-- BREAK -->' . '<strong>UPS %1$s</strong><br>%3$s',
                 $this->getConfig('SHIPPING_METHOD_' . $method),
                 $this->getNameBoxWeight(),
                 $this->getConfig(Group::SHIPPING_NATIONAL . '_START_TITLE')
             ),
-            'cost'  => 0,
-            'debug' => [
-                'calculations' => [],
-            ],
+            'cost'         => 0,
+            'calculations' => [],
         ];
 
         $shipping_national_costs = json_decode($this->getConfig(Group::SHIPPING_NATIONAL . '_' . $method . '_COSTS'), true);
@@ -241,17 +239,15 @@ class Quote
             $box_maximum_costs  = $weight_cost;
 
             if ($this->total_weight <= $weight_max) {
-                $costs_before = $method_paket_national['cost'];
-
-                $method_paket_national['cost']                   += $weight_cost;
-                $method_paket_national['debug']['calculations'][] = sprintf(
-                    'Costs (%01.2f €) + National shipping (%s) (%01.2f €) for shipment (%01.2f kg) = %01.2f €',
-                    $costs_before,
-                    $method,
-                    $weight_cost,
-                    $this->total_weight,
-                    $method_paket_national['cost']
-                );
+                $method_paket_national['cost']          += $weight_cost;
+                $method_paket_national['calculations'][] = [
+                    'item'  => sprintf(
+                        'National shipping (%s) for shipment (%01.2f kg)',
+                        $method,
+                        $this->total_weight
+                    ),
+                    'costs' => $weight_cost,
+                ];
 
                 break;
             }
@@ -259,23 +255,21 @@ class Quote
 
         /** Costs per kg */
         if ($this->total_weight > $box_maximum_weight) {
-            $box_weight_excess = $this->total_weight - $box_maximum_weight;
-            $weight_cost_kg    = $this->getConfig(Group::SHIPPING_NATIONAL . '_' . $method . '_KG');
-            $weight_cost       = max(
+            $box_weight_excess                       = $this->total_weight - $box_maximum_weight;
+            $weight_cost_kg                          = $this->getConfig(Group::SHIPPING_NATIONAL . '_' . $method . '_KG');
+            $weight_cost                             = max(
                 $weight_cost_min,
                 $box_maximum_costs + ceil($box_weight_excess) * $weight_cost_kg
             );
-            $costs_before      = $method_paket_national['cost'];
-
-            $method_paket_national['cost']                   += $weight_cost;
-            $method_paket_national['debug']['calculations'][] = sprintf(
-                'Costs (%01.2f €) + National shipping (%s) (%01.2f €) for shipment (%01.2f kg) = %01.2f €',
-                $costs_before,
-                $method,
-                $weight_cost,
-                $this->total_weight,
-                $method_paket_national['cost']
-            );
+            $method_paket_national['cost']          += $weight_cost;
+            $method_paket_national['calculations'][] = [
+                'item'  => sprintf(
+                    'National shipping (%s) for shipment (%01.2f kg)',
+                    $method,
+                    $this->total_weight
+                ),
+                'costs' => $weight_cost,
+            ];
         }
 
         return $method_paket_national;
@@ -284,17 +278,15 @@ class Quote
     private function getShippingMethodGroups(string $group, string $method): array
     {
         $method_group = [
-            'id'    => CaseConverter::screamingToLisp($method),
-            'title' => sprintf(
+            'id'           => CaseConverter::screamingToLisp($method),
+            'title'        => sprintf(
                 'UPS %1$s (%2$s)' . '<!-- BREAK -->' . '<strong>UPS %1$s</strong><br>%3$s',
                 $this->getConfig('SHIPPING_METHOD_' . $method),
                 $this->getNameBoxWeight(),
                 $this->getConfig($group . '_START_TITLE')
             ),
-            'cost'  => 0,
-            'debug' => [
-                'calculations' => [],
-            ],
+            'cost'         => 0,
+            'calculations' => [],
         ];
 
         $shipping_costs_group = json_decode($this->getConfig($group . '_' . $method . '_COSTS'), true);
@@ -319,19 +311,17 @@ class Quote
                 $box_maximum_costs  = $weight_cost;
 
                 if ($box_weight <= $weight_max) {
-                    $costs_before = $method_group['cost'];
-
-                    $method_group['cost']                   += $weight_cost;
-                    $method_group['debug']['calculations'][] = sprintf(
-                        'Costs (%01.2f €) + National shipping (%s) (%01.2f €) for box %d / %d (%01.2f kg) = %01.2f €',
-                        $costs_before,
-                        $method,
-                        $weight_cost,
-                        $box_index + 1,
-                        count($this->boxes),
-                        $box_weight,
-                        $method_group['cost']
-                    );
+                    $method_group['cost']          += $weight_cost;
+                    $method_group['calculations'][] = [
+                        'item'  => sprintf(
+                            'National shipping (%s) for box %d / %d (%01.2f kg)',
+                            $method,
+                            $box_index + 1,
+                            count($this->boxes),
+                            $box_weight
+                        ),
+                        'costs' => $weight_cost,
+                    ];
 
                     break;
                 }
@@ -345,20 +335,19 @@ class Quote
                     $shipping_costs_min_group,
                     $box_maximum_costs + ceil($box_weight_excess) * $weight_cost_kg
                 );
-                $costs_before      = $method_group['cost'];
 
-                $method_group['cost']                   += $weight_cost;
-                $method_group['debug']['calculations'][] = sprintf(
-                    'Costs (%01.2f €) + %s (%s) (%01.2f €) for box %d / %d (%01.2f kg) = %01.2f €',
-                    $costs_before,
-                    $group,
-                    $method,
-                    $weight_cost,
-                    $box_index + 1,
-                    count($this->boxes),
-                    $box_weight,
-                    $method_group['cost']
-                );
+                $method_group['cost']          += $weight_cost;
+                $method_group['calculations'][] = [
+                    'item'  => sprintf(
+                        '%s (%s) for box %d / %d (%01.2f kg)',
+                        $group,
+                        $method,
+                        $box_index + 1,
+                        count($this->boxes),
+                        $box_weight
+                    ),
+                    'costs' => $weight_cost,
+                ];
             }
         }
 
@@ -456,31 +445,31 @@ class Quote
                                     continue;
                                 }
 
-                                $method_cost                       = $method['cost'];
-                                $method['cost']                   += $surcharge_amount;
-                                $method['debug']['calculations'][] = sprintf(
-                                    'Costs (%01.2f €) + %s (%01.2f €) for box %d / %d (%01.2f kg) = %01.2f €',
-                                    $method_cost,
-                                    $surcharge['name'],
-                                    $surcharge['surcharge'],
-                                    $box_index + 1,
-                                    count($this->boxes),
-                                    $box_weight,
-                                    $method['cost']
-                                );
+                                $method_cost              = $method['cost'];
+                                $method['cost']          += $surcharge_amount;
+                                $method['calculations'][] = [
+                                    'item'  => sprintf(
+                                        '%s for box %d / %d (%01.2f kg)',
+                                        $surcharge['name'],
+                                        $box_index + 1,
+                                        count($this->boxes),
+                                        $box_weight
+                                    ),
+                                    'costs' => $surcharge_amount,
+                                ];
                             }
                         } else {
                             if ($this->total_weight >= $for_weight) {
-                                $method_cost                       = $method['cost'];
-                                $method['cost']                   += $surcharge_amount;
-                                $method['debug']['calculations'][] = sprintf(
-                                    'Costs (%01.2f €) + %s (%01.2f €) for order (%01.2f kg) = %01.2f €',
-                                    $method_cost,
-                                    $surcharge['name'],
-                                    $surcharge['surcharge'],
-                                    $this->total_weight,
-                                    $method['cost']
-                                );
+                                $method_cost              = $method['cost'];
+                                $method['cost']          += $surcharge_amount;
+                                $method['calculations'][] = [
+                                    'item'  => sprintf(
+                                        '%s for order (%01.2f kg)',
+                                        $surcharge['name'],
+                                        $this->total_weight
+                                    ),
+                                    'costs' => $surcharge_amount,
+                                ];
                             }
                         }
                         break;
@@ -496,32 +485,32 @@ class Quote
                                     continue;
                                 }
 
-                                $method['cost']                   += $surcharge_amount;
-                                $method['debug']['calculations'][] = sprintf(
-                                    'Costs before surcharges (%01.2f €) * (%s: %01.2f %% (%01.2f €)) for box %d / %d (%01.2f kg) = %01.2f €',
-                                    $cost_before_surcharges,
-                                    $surcharge['name'],
-                                    $surcharge['surcharge'],
-                                    $surcharge_amount,
-                                    $box_index + 1,
-                                    count($this->boxes),
-                                    $box_weight,
-                                    $method['cost']
-                                );
+                                $method['cost']          += $surcharge_amount;
+                                $method['calculations'][] = [
+                                    'item'  => sprintf(
+                                        '%s: %01.2f %% for box %d / %d (%01.2f kg)',
+                                        $surcharge['name'],
+                                        $surcharge['surcharge'],
+                                        $box_index + 1,
+                                        count($this->boxes),
+                                        $box_weight
+                                    ),
+                                    'costs' => $surcharge_amount,
+                                ];
                             }
                         } else {
                             if ($this->total_weight >= $for_weight) {
-                                $method_cost                       = $method['cost'];
-                                $method['cost']                   += $surcharge_amount;
-                                $method['debug']['calculations'][] = sprintf(
-                                    'Costs before surcharges (%01.2f €) * (%s: %01.2f %% (%01.2f €)) for order (%01.2f kg) = %01.2f €',
-                                    $method_cost,
-                                    $surcharge['name'],
-                                    $surcharge['surcharge'],
-                                    $surcharge_amount,
-                                    $this->total_weight,
-                                    $method['cost']
-                                );
+                                $method_cost              = $method['cost'];
+                                $method['cost']          += $surcharge_amount;
+                                $method['calculations'][] = [
+                                    'item'  => sprintf(
+                                        '%s: %01.2f %% for order (%01.2f kg)',
+                                        $surcharge['name'],
+                                        $surcharge['surcharge'],
+                                        $this->total_weight
+                                    ),
+                                    'costs' => $surcharge_amount,
+                                ];
                             }
                         }
                         break;
@@ -558,18 +547,16 @@ class Quote
                     $box_weight  = $box->getWeight();
 
                     if ($box_weight <= $weight_max) {
-                        $cost_before = $method['cost'];
-
-                        $method['cost']                   += $weight_cost;
-                        $method['debug']['calculations'][] = sprintf(
-                            'Costs (%01.2f €) + Pick and Pack (%01.2f €) for box %d / %d (%01.2f kg) = %01.2f €',
-                            $cost_before,
-                            $weight_cost,
-                            $box_index + 1,
-                            count($this->boxes),
-                            $box_weight,
-                            $method['cost']
-                        );
+                        $method['cost']          += $weight_cost;
+                        $method['calculations'][] = [
+                            'item'  => sprintf(
+                                'Pick and Pack for box %d / %d (%01.2f kg)',
+                                $box_index + 1,
+                                count($this->boxes),
+                                $box_weight
+                            ),
+                            'costs' => $weight_cost,
+                        ];
 
                         break;
                     }
@@ -599,12 +586,13 @@ class Quote
                     $round_up_to = $number_whole + $surcharges_round_up_to;
                 }
 
-                $method['debug']['calculations'][] = sprintf(
-                    'Costs (%01.2f €) round up to %01.2f = %01.2f',
-                    $method_cost,
-                    $surcharges_round_up_to,
-                    $round_up_to
-                );
+                $method['calculations'][] = [
+                    'item'  => sprintf(
+                        'Round up to %01.2f',
+                        $surcharges_round_up_to
+                    ),
+                    'costs' => $round_up_to - $method_cost,
+                ];
 
                 $method['cost'] = $round_up_to;
             }
@@ -639,6 +627,9 @@ class Quote
                 $weight
             );
         }
+
+        $debug_is_enabled = $this->getConfig('DEBUG_ENABLE');
+        $user_is_admin    = isset($_SESSION['customers_status']['customers_status_id']) && 0 === (int) $_SESSION['customers_status']['customers_status_id'];
 
         if ('true' !== $debug_is_enabled || !$user_is_admin) {
             $boxes_weight_text = [
@@ -677,16 +668,35 @@ class Quote
         $user_is_admin    = isset($_SESSION['customers_status']['customers_status_id']) && 0 === (int) $_SESSION['customers_status']['customers_status_id'];
 
         if ('true' === $debug_is_enabled && $user_is_admin) {
-            foreach ($this->methods as &$method) {
+            foreach ($methods as &$method) {
+                $total = 0;
+
                 ob_start();
                 ?>
-                <br /><br />
+                <br><br>
 
                 <h3>Debug mode</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Costs</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
 
-                <?php foreach ($method['debug']['calculations'] as $calculation) { ?>
-                    <p><?= $calculation ?></p>
-                <?php } ?>
+                    <tbody>
+                        <?php foreach ($method['calculations'] as $calculation) { ?>
+                            <?php $total += $calculation['costs']; ?>
+
+                            <tr>
+                                <td><?= $calculation['item'] ?></td>
+                                <td><?= \sprintf('%01.2f', $calculation['costs']) ?></td>
+                                <td><?= \sprintf('%01.2f', $total) ?></td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
                 <?php
                 $method['title'] .= ob_get_clean();
             }
