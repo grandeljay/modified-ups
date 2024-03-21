@@ -2,6 +2,8 @@
 
 namespace Grandeljay\Ups\Configuration;
 
+use Grandeljay\Ups\Constants;
+
 class Field
 {
     /**
