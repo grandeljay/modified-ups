@@ -22,13 +22,14 @@ if (defined('TABLE_COUNTRIES') && defined('MODULE_SHIPPING_GRANDELJAYUPS_SHIPPIN
 /**
  * General
  */
-$translations_general = array(
+$translations_general = [
     /** Module */
     'TITLE'                     => 'grandeljay - UPS',
     'LONG_DESCRIPTION'          => 'Método de envío UPS',
     'STATUS_TITLE'              => '¿Activar módulo?',
     'STATUS_DESC'               => 'Permite el envío a través de UPS.',
     'TEXT_TITLE'                => 'UPS',
+    'TEXT_TITLE_WEIGHT'         => 'UPS %s (%s kg)',
 
     /** Interface */
     'BUTTON_ADD'                => 'Añada',
@@ -54,12 +55,12 @@ $translations_general = array(
     'SHIPPING_METHOD_1200'      => 'Express 12:00',
     'SHIPPING_METHOD_EXPRESS'   => 'Express 10:30',
     'SHIPPING_METHOD_PLUS'      => 'Express Plus',
-);
+];
 
 /**
  * Weight
  */
-$translations_weight = array(
+$translations_weight = [
     Group::SHIPPING_WEIGHT . '_START_TITLE' => 'Peso',
     Group::SHIPPING_WEIGHT . '_START_DESC'  => 'Aquí encontrará todos los ajustes relativos al embalaje y al peso. Haga clic en el grupo para abrir los ajustes.',
 
@@ -70,12 +71,12 @@ $translations_weight = array(
 
     Group::SHIPPING_WEIGHT . '_END_TITLE'   => '',
     Group::SHIPPING_WEIGHT . '_END_DESC'    => '',
-);
+];
 
 /**
  * Methods
  */
-$translations_methods = array(
+$translations_methods = [
     Group::SHIPPING_METHODS . '_START_TITLE'     => 'Métodos de envío',
     Group::SHIPPING_METHODS . '_START_DESC'      => '¿Qué métodos de envío de UPS deben ofrecerse?',
     Group::SHIPPING_METHODS . '_STANDARD_TITLE'  => $translations_general['SHIPPING_METHOD_STANDARD'],
@@ -92,7 +93,7 @@ $translations_methods = array(
     Group::SHIPPING_METHODS . '_EXPEDITED_DESC'  => '',
     Group::SHIPPING_METHODS . '_END_TITLE'       => '',
     Group::SHIPPING_METHODS . '_END_DESC'        => '',
-);
+];
 /** */
 
 /**
@@ -103,7 +104,7 @@ require_once DIR_FS_CATALOG . 'includes/modules/shipping/grandeljayups.php';
 /**
  * National
  */
-$translations_national = array(
+$translations_national = [
     Group::SHIPPING_NATIONAL . '_START_TITLE'   => 'Envíos nacionales',
     Group::SHIPPING_NATIONAL . '_START_DESC'    => 'Aquí encontrará todos los ajustes relativos al envío nacional. Haga clic en el grupo para abrir los ajustes.',
 
@@ -123,7 +124,7 @@ $translations_national = array(
 
     Group::SHIPPING_NATIONAL . '_END_TITLE'     => '',
     Group::SHIPPING_NATIONAL . '_END_DESC'      => '',
-);
+];
 
 foreach (grandeljayups::$methods[Group::SHIPPING_NATIONAL] as $method_name) {
     $method_group = Group::SHIPPING_NATIONAL . '_' . $method_name;
@@ -150,7 +151,7 @@ foreach (grandeljayups::$methods[Group::SHIPPING_NATIONAL] as $method_name) {
 /**
  * Groups
  */
-$translations_groups = array();
+$translations_groups = [];
 
 foreach (grandeljayups::$methods_international as $group) {
     $group_letter = substr($group, -1, 1);
@@ -158,7 +159,7 @@ foreach (grandeljayups::$methods_international as $group) {
 
     $translations_groups = array_merge(
         $translations_groups,
-        array(
+        [
             $group . '_START_TITLE'     => $group_title,
             $group . '_START_DESC'      => 'Aquí encontrará todos los ajustes relativos al envío internacional. Haga clic en el grupo para abrir los ajustes.',
 
@@ -167,7 +168,7 @@ foreach (grandeljayups::$methods_international as $group) {
 
             $group . '_END_TITLE'       => '',
             $group . '_END_DESC'        => '',
-        )
+        ]
     );
 
     foreach (grandeljayups::$methods[$group] as $method_name) {
@@ -198,7 +199,7 @@ $translations_groups[Group::SHIPPING_GROUP_F . '_START_DESC'] = 'Este grupo se r
 /**
  * Surcharges
  */
-$translations_surcharges = array(
+$translations_surcharges = [
     Group::SURCHARGES . '_START_TITLE'                     => 'Impactos',
     Group::SURCHARGES . '_START_DESC'                      => 'Aquí encontrará todos los ajustes relativos a los recargos. Haga clic en el grupo para abrir los ajustes.',
 
@@ -241,7 +242,7 @@ $translations_surcharges = array(
 
     Group::SURCHARGES . '_END_TITLE'                       => '',
     Group::SURCHARGES . '_END_DESC'                        => '',
-);
+];
 
 /**
  * Define
