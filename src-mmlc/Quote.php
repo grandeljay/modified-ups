@@ -614,38 +614,6 @@ class Quote
 
     private function getNameBoxWeight(): string
     {
-        /**
-         * Description
-         *//*
-        foreach ($this->methods as &$method) {
-            $method['title'] .=
-        }*/
-
-        /**
-         * Output debug
-         */
-        $debug_is_enabled = $this->getConfig('DEBUG_ENABLE');
-        $user_is_admin    = isset($_SESSION['customers_status']['customers_status_id']) && 0 === (int) $_SESSION['customers_status']['customers_status_id'];
-
-        if ('true' === $debug_is_enabled && $user_is_admin) {
-            foreach ($this->methods as &$method) {
-                ob_start();
-                ?>
-                <br /><br />
-
-                <h3>Debug mode</h3>
-
-                <?php foreach ($method['debug']['calculations'] as $calculation) { ?>
-                    <p><?= $calculation ?></p>
-                <?php } ?>
-                <?php
-                $method['title'] .= ob_get_clean();
-            }
-        }
-
-        /**
-         * Box weights
-         */
         $boxes_weight = [];
 
         foreach ($this->boxes as $box) {
@@ -699,6 +667,28 @@ class Quote
                 if ($method_id === $method['id']) {
                     $methods[] = $method;
                 }
+            }
+        }
+
+        /**
+         * Output debug
+         */
+        $debug_is_enabled = $this->getConfig('DEBUG_ENABLE');
+        $user_is_admin    = isset($_SESSION['customers_status']['customers_status_id']) && 0 === (int) $_SESSION['customers_status']['customers_status_id'];
+
+        if ('true' === $debug_is_enabled && $user_is_admin) {
+            foreach ($this->methods as &$method) {
+                ob_start();
+                ?>
+                <br /><br />
+
+                <h3>Debug mode</h3>
+
+                <?php foreach ($method['debug']['calculations'] as $calculation) { ?>
+                    <p><?= $calculation ?></p>
+                <?php } ?>
+                <?php
+                $method['title'] .= ob_get_clean();
             }
         }
 
