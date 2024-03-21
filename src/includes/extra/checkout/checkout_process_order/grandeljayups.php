@@ -10,7 +10,7 @@
 
 namespace Grandeljay\Ups;
 
-if (\rth_is_module_disabled(\grandeljayups::NAME)) {
+if (\rth_is_module_disabled(Constants::MODULE_SHIPPING_NAME)) {
     return;
 }
 
@@ -40,8 +40,8 @@ require $language_file;
 
 $simplified_method = \substr($order->info['shipping_class'], \strlen(\grandeljayups::class . '_'));
 $simplified_name   = sprintf(
-    constant(\grandeljayups::NAME . '_TEXT_TITLE_WEIGHT'),
-    constant(\grandeljayups::NAME . '_SHIPPING_METHOD_' . \strtoupper($simplified_method)),
+    constant(Constants::MODULE_SHIPPING_NAME . '_TEXT_TITLE_WEIGHT'),
+    constant(Constants::MODULE_SHIPPING_NAME . '_SHIPPING_METHOD_' . \strtoupper($simplified_method)),
     round($_SESSION['cart']->weight, 2)
 );
 

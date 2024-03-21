@@ -2,13 +2,14 @@
 
 namespace Grandeljay\Ups\Configuration;
 
+use Grandeljay\Ups\Constants;
 use RobinTheHood\ModifiedStdModule\Classes\CaseConverter;
 
 class Group
 {
     public static function start(string $value, string $option): string
     {
-        $key_without_module_name = substr($option, strlen(\grandeljayups::NAME) + 1);
+        $key_without_module_name = substr($option, strlen(Constants::MODULE_SHIPPING_NAME) + 1);
         $key_lisp                = CaseConverter::screamingToLisp($key_without_module_name);
 
         ob_start();

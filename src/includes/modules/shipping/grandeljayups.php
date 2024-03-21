@@ -11,7 +11,7 @@
  * @phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
  */
 
-use Grandeljay\Ups\Quote;
+use Grandeljay\Ups\{Constants, Quote};
 use Grandeljay\Ups\Configuration\{Group, Field};
 use RobinTheHood\ModifiedStdModule\Classes\{StdModule, CaseConverter};
 
@@ -20,7 +20,6 @@ use RobinTheHood\ModifiedStdModule\Classes\{StdModule, CaseConverter};
  */
 class grandeljayups extends StdModule
 {
-    public const NAME    = 'MODULE_SHIPPING_GRANDELJAYUPS';
     public const VERSION = '0.5.0';
 
     public static array $methods_international = [
@@ -83,7 +82,7 @@ class grandeljayups extends StdModule
         /** Set method to use */
         $key_without_module_name = substr(
             $option,
-            strlen(self::NAME) + 1,
+            strlen(Constants::MODULE_SHIPPING_NAME) + 1,
         );
         $method_name             = CaseConverter::screamingToCamel($key_without_module_name);
         /** */
@@ -110,7 +109,7 @@ class grandeljayups extends StdModule
             }
 
             /** Methods */
-            $option_short = substr($option, strlen(self::NAME) + 1);
+            $option_short = substr($option, strlen(Constants::MODULE_SHIPPING_NAME) + 1);
             $methods      = [
                 Group::SHIPPING_METHODS . '_STANDARD',
                 Group::SHIPPING_METHODS . '_SAVER',
@@ -177,7 +176,7 @@ class grandeljayups extends StdModule
 
     public function __construct()
     {
-        parent::__construct(self::NAME);
+        parent::__construct(Constants::MODULE_SHIPPING_NAME);
 
         $this->checkForUpdate(true);
 
@@ -769,7 +768,7 @@ class grandeljayups extends StdModule
      */
     public function quote(string $method_id = ''): ?array
     {
-        $quote  = new Quote(self::NAME);
+        $quote  = new Quote(Constants::MODULE_SHIPPING_NAME);
         $quotes = $quote->getQuote($method_id);
 
         if (is_array($quotes) && !$quote->exceedsMaximumWeight()) {
