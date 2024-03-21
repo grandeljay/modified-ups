@@ -314,8 +314,9 @@ class Quote
                     $method_group['cost']          += $weight_cost;
                     $method_group['calculations'][] = [
                         'item'  => sprintf(
-                            'International shipping (%s) for box %d / %d (%01.2f kg)',
+                            'International shipping tarif (%s, %s) for box %d / %d (%01.2f kg)',
                             $method,
+                            $group,
                             $box_index + 1,
                             count($this->boxes),
                             $box_weight
@@ -339,9 +340,9 @@ class Quote
                 $method_group['cost']          += $weight_cost;
                 $method_group['calculations'][] = [
                     'item'  => sprintf(
-                        '%s (%s) for box %d / %d (%01.2f kg)',
-                        $group,
+                        'International shipping per kg (%s, %s) for box %d / %d (%01.2f kg)',
                         $method,
+                        $group,
                         $box_index + 1,
                         count($this->boxes),
                         $box_weight
