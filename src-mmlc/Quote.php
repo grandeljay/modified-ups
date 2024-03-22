@@ -295,61 +295,48 @@ class Quote
 
         $shipping_costs_min_group = $this->getConfig($group . '_' . $method . '_MIN');
 
-        foreach ($this->boxes as $box_index => $box) {
-            $box_weight         = $box->getWeight();
-            $box_maximum_weight = 0;
-            $box_maximum_costs  = 0;
+        /** Costs per table */
+        foreach ($shipping_costs_group as $shipping_international_cost) {
+            $weight_max         = (float) $shipping_international_cost['weight-max'];
+            $weight_cost        = max(
+                (float) $shipping_international_cost['weight-costs'],
+                $shipping_costs_min_group
+            );
+            $box_maximum_weight = $weight_max;
+            $box_maximum_costs  = $weight_cost;
 
-            /** Costs per table */
-            foreach ($shipping_costs_group as $shipping_group_cost) {
-                $weight_max         = (float) $shipping_group_cost['weight-max'];
-                $weight_cost        = max(
-                    (float) $shipping_group_cost['weight-costs'],
-                    $shipping_costs_min_group
-                );
-                $box_maximum_weight = $weight_max;
-                $box_maximum_costs  = $weight_cost;
-
-                if ($box_weight <= $weight_max) {
-                    $method_group['cost']          += $weight_cost;
-                    $method_group['calculations'][] = [
-                        'item'  => sprintf(
-                            'International shipping tarif (%s, %s) for box %d / %d (%01.2f kg)',
-                            $method,
-                            $group,
-                            $box_index + 1,
-                            count($this->boxes),
-                            $box_weight
-                        ),
-                        'costs' => $weight_cost,
-                    ];
-
-                    break;
-                }
-            }
-
-            /** Costs per kg */
-            if ($box_weight > $box_maximum_weight) {
-                $box_weight_excess = $box_weight - $box_maximum_weight;
-                $weight_cost_kg    = $this->getConfig($group . '_' . $method . '_KG');
-                $weight_cost       = max(
-                    $shipping_costs_min_group,
-                    $box_maximum_costs + ceil($box_weight_excess) * $weight_cost_kg
-                );
-
+            if ($this->total_weight <= $weight_max) {
                 $method_group['cost']          += $weight_cost;
                 $method_group['calculations'][] = [
                     'item'  => sprintf(
-                        'International shipping per kg (%s, %s) for box %d / %d (%01.2f kg)',
+                        'International shipping (%s) for shipment (%01.2f kg)',
                         $method,
-                        $group,
-                        $box_index + 1,
-                        count($this->boxes),
-                        $box_weight
+                        $this->total_weight
                     ),
                     'costs' => $weight_cost,
                 ];
+
+                break;
             }
+        }
+
+        /** Costs per kg */
+        if ($this->total_weight > $box_maximum_weight) {
+            $box_weight_excess              = $this->total_weight - $box_maximum_weight;
+            $weight_cost_kg                 = $this->getConfig(Group::SHIPPING_NATIONAL . '_' . $method . '_KG');
+            $weight_cost                    = max(
+                $shipping_costs_min_group,
+                $box_maximum_costs + ceil($box_weight_excess) * $weight_cost_kg
+            );
+            $method_group['cost']          += $weight_cost;
+            $method_group['calculations'][] = [
+                'item'  => sprintf(
+                    'International shipping (%s) for shipment (%01.2f kg)',
+                    $method,
+                    $this->total_weight
+                ),
+                'costs' => $weight_cost,
+            ];
         }
 
         return $method_group;
