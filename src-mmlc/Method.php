@@ -1,0 +1,384 @@
+<?php
+
+namespace Grandeljay\Ups;
+
+use Grandeljay\Ups\Configuration\Configuration;
+use Grandeljay\Ups\Configuration\Group;
+
+/**
+ * A modified-shop shipping method for UPS.
+ */
+class Method
+{
+    public static function isEnabled(string $method_name): bool
+    {
+        $method_is_enabled = 'true' === Configuration::get(Group::SHIPPING_METHODS . '_' . $method_name);
+
+        return $method_is_enabled;
+    }
+
+    public function __construct()
+    {
+    }
+
+    public function isNational(): bool
+    {
+        global $order;
+
+        $is_national = \STORE_COUNTRY === $order->delivery['country']['id'];
+
+        return $is_national;
+    }
+
+    public function isInternational(): bool
+    {
+        global $order;
+
+        $is_international = \STORE_COUNTRY !== $order->delivery['country']['id'];
+
+        return $is_international;
+    }
+
+    public function getBoxes(): array
+    {
+        global $order;
+
+        $boxes                 = [];
+        $shipping_weight_ideal = Configuration::get(Group::SHIPPING_WEIGHT . '_IDEAL');
+
+        if (null === $order) {
+            return $boxes;
+        }
+
+        foreach ($order->products as $product) {
+            for ($i = 1; $i <= $product['quantity']; $i++) {
+                $product_weight = (float) $product['weight'];
+
+                /** Find a box empty enough to fit product */
+                foreach ($boxes as $box) {
+                    $box_weight          = $box->getWeight();
+                    $box_can_fit_product = $box_weight + $product_weight < $shipping_weight_ideal;
+
+                    if ($box_can_fit_product) {
+                        $box->addProduct($product);
+
+                        continue 2;
+                    }
+                }
+
+                /** Add product to a new box */
+                $box = new Parcel();
+                $box->addProduct($product);
+
+                /** Add box to list */
+                $boxes[] = $box;
+            }
+        }
+
+        return $boxes;
+    }
+
+    public function getWeight(): float
+    {
+        $total_weight = 0;
+
+        foreach ($this->getBoxes() as $box) {
+            $total_weight += $box->getWeight();
+        }
+
+        return $total_weight;
+    }
+
+    protected function getWeightFormatted(): string
+    {
+        $boxes        = $this->getBoxes();
+        $boxes_weight = [];
+
+        foreach ($boxes as $box) {
+            $key = $box->getWeight() . ' kg';
+
+            if (isset($boxes_weight[$key])) {
+                $boxes_weight[$key]++;
+            } else {
+                $boxes_weight[$key] = 1;
+            }
+        }
+
+        $boxes_weight_text = [];
+
+        foreach ($boxes_weight as $weight_text => $quantity) {
+            preg_match('/[\d+\.]+/', $weight_text, $weight_matches);
+
+            $weight = round($weight_matches[0], 2) . ' kg';
+
+            $boxes_weight_text[] = sprintf(
+                '%dx %s',
+                $quantity,
+                $weight
+            );
+        }
+
+        $debug_is_enabled = Configuration::get('DEBUG_ENABLE');
+        $user_is_admin    = isset($_SESSION['customers_status']['customers_status_id']) && 0 === (int) $_SESSION['customers_status']['customers_status_id'];
+
+        if ('true' !== $debug_is_enabled || !$user_is_admin) {
+            $boxes_weight_text = [
+                sprintf(
+                    '%s kg',
+                    round($this->getWeight(), 2)
+                ),
+            ];
+        }
+
+        return implode(', ', $boxes_weight_text);
+    }
+
+    protected function setSurcharges(array &$methods): void
+    {
+        $boxes        = $this->getBoxes();
+        $total_weight = $this->getWeight();
+
+        /**
+         * Surcharges
+         */
+        $surcharges_config = json_decode(Configuration::Get('SURCHARGES_SURCHARGES'), true);
+        $surcharges        = [];
+        $surcharges_update = false;
+
+        foreach ($methods as &$method) {
+            $cost_before_surcharges = $method['cost'];
+
+            foreach ($surcharges_config as $surcharge_index => $surcharge) {
+                /**
+                 * For Weight
+                 */
+                $for_weight      = $surcharge['for-weight'] ?? 0;
+                $key_per_package = sprintf('configuration[per-package-%d]', $surcharge_index);
+
+                if ('true' !== $surcharge[$key_per_package]) {
+                    if ($total_weight < $for_weight) {
+                        continue;
+                    }
+                }
+
+                /**
+                 * For Method
+                 */
+                $for_method = $surcharge['for-method'] ?? 'all' ;
+
+                if (
+                       $method['id'] !== $for_method
+                    && 'all'         !== $for_method
+                    && 'all-others'  !== $for_method
+                ) {
+                    continue;
+                }
+
+                /** All others */
+                if ('standard' === $method['id'] && 'all-others' === $for_method) {
+                    continue;
+                }
+
+                /**
+                 * Duration
+                 */
+                if (!empty($surcharge['duration-start']) && !empty($surcharge['duration-end'])) {
+                    /** Date now */
+                    $date_now = new \DateTime();
+
+                    /** Duration start */
+                    $duration_start           = new \DateTime($surcharge['duration-start']);
+                    $duration_start_is_active = $date_now >= $duration_start;
+
+                    /** Duration end */
+                    $duration_end           = new \DateTime($surcharge['duration-end']);
+                    $duration_end_is_active = $date_now <= $duration_end;
+
+                    /** Automatically update duration years */
+                    if ($date_now > $duration_start && $date_now > $duration_end) {
+                        $new_duration_start = $duration_start->modify('+1 year');
+                        $new_duration_end   = $duration_end->modify('+1 year');
+
+                        $surcharge['duration-start'] = $new_duration_start->format('Y-m-d');
+                        $surcharge['duration-end']   = $new_duration_end->format('Y-m-d');
+
+                        $surcharges_update = true;
+                    }
+
+                    /** Duration now */
+                    $duration_is_now = $duration_start_is_active && $duration_end_is_active;
+
+                    if (!$duration_is_now) {
+                        continue;
+                    }
+                }
+
+                $key_per_package = sprintf('configuration[per-package-%d]', $surcharge_index);
+
+                switch ($surcharge['type']) {
+                    case 'fixed':
+                        $surcharge_amount = (float) $surcharge['surcharge'];
+
+                        if ('true' === $surcharge[$key_per_package]) {
+                            foreach ($boxes as $box_index => $box) {
+                                $box_weight = $box->getWeight();
+
+                                if ($box_weight < $for_weight) {
+                                    continue;
+                                }
+
+                                $method_cost              = $method['cost'];
+                                $method['cost']          += $surcharge_amount;
+                                $method['calculations'][] = [
+                                    'item'  => sprintf(
+                                        '%s for box %d / %d (%01.2f kg)',
+                                        $surcharge['name'],
+                                        $box_index + 1,
+                                        count($boxes),
+                                        $box_weight
+                                    ),
+                                    'costs' => $surcharge_amount,
+                                ];
+                            }
+                        } else {
+                            if ($total_weight >= $for_weight) {
+                                $method_cost              = $method['cost'];
+                                $method['cost']          += $surcharge_amount;
+                                $method['calculations'][] = [
+                                    'item'  => sprintf(
+                                        '%s for order (%01.2f kg)',
+                                        $surcharge['name'],
+                                        $total_weight
+                                    ),
+                                    'costs' => $surcharge_amount,
+                                ];
+                            }
+                        }
+                        break;
+
+                    case 'percent':
+                        $surcharge_amount = $cost_before_surcharges * ($surcharge['surcharge'] / 100);
+
+                        if ('true' === $surcharge[$key_per_package]) {
+                            foreach ($boxes as $box_index => $box) {
+                                $box_weight = $box->getWeight();
+
+                                if ($box_weight < $for_weight) {
+                                    continue;
+                                }
+
+                                $method['cost']          += $surcharge_amount;
+                                $method['calculations'][] = [
+                                    'item'  => sprintf(
+                                        '%s: %01.2f %% for box %d / %d (%01.2f kg)',
+                                        $surcharge['name'],
+                                        $surcharge['surcharge'],
+                                        $box_index + 1,
+                                        count($boxes),
+                                        $box_weight
+                                    ),
+                                    'costs' => $surcharge_amount,
+                                ];
+                            }
+                        } else {
+                            if ($total_weight >= $for_weight) {
+                                $method_cost              = $method['cost'];
+                                $method['cost']          += $surcharge_amount;
+                                $method['calculations'][] = [
+                                    'item'  => sprintf(
+                                        '%s: %01.2f %% for order (%01.2f kg)',
+                                        $surcharge['name'],
+                                        $surcharge['surcharge'],
+                                        $total_weight
+                                    ),
+                                    'costs' => $surcharge_amount,
+                                ];
+                            }
+                        }
+                        break;
+                }
+            }
+
+            $surcharges[] = $surcharge;
+        }
+
+        /** Update surcharges option */
+        if ($surcharges_update) {
+            \xtc_db_query(
+                sprintf(
+                    'UPDATE `%s`
+                        SET `configuration_value` = "%s"
+                      WHERE `configuration_key`   = "%s"',
+                    \TABLE_CONFIGURATION,
+                    \addslashes(json_encode($surcharges)),
+                    'MODULE_SHIPPING_GRANDELJAYUPS_SURCHARGES'
+                )
+            );
+        }
+
+        /** Pick and Pack */
+        foreach ($methods as &$method) {
+            $pick_and_pack_costs = json_decode(Configuration::Get(Group::SURCHARGES . '_PICK_AND_PACK', '[]'), true);
+
+            asort($pick_and_pack_costs);
+
+            foreach ($boxes as $box_index => $box) {
+                foreach ($pick_and_pack_costs as $pick_and_pack_cost) {
+                    $weight_max  = floatval($pick_and_pack_cost['weight-max']);
+                    $weight_cost = floatval($pick_and_pack_cost['weight-costs']);
+                    $box_weight  = $box->getWeight();
+
+                    if ($box_weight <= $weight_max) {
+                        $method['cost']          += $weight_cost;
+                        $method['calculations'][] = [
+                            'item'  => sprintf(
+                                'Pick and Pack for box %d / %d (%01.2f kg)',
+                                $box_index + 1,
+                                count($boxes),
+                                $box_weight
+                            ),
+                            'costs' => $weight_cost,
+                        ];
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        /** Round up */
+        $surcharges_round_up    = Configuration::Get(Group::SURCHARGES . '_ROUND_UP');
+        $surcharges_round_up_to = Configuration::Get(Group::SURCHARGES . '_ROUND_UP_TO');
+
+        if ('true' === $surcharges_round_up && is_numeric($surcharges_round_up_to)) {
+            $surcharges_round_up_to = (float) $surcharges_round_up_to;
+
+            foreach ($methods as &$method) {
+                $method_cost     = $method['cost'];
+                $number_whole    = floor($method_cost);
+                $number_decimals = round($method_cost - $number_whole, 2);
+
+                $round_up_to = $method_cost;
+
+                if ($number_decimals > $surcharges_round_up_to) {
+                    $round_up_to = ceil($method_cost) + $surcharges_round_up_to;
+                }
+
+                if ($number_decimals < $surcharges_round_up_to) {
+                    $round_up_to = $number_whole + $surcharges_round_up_to;
+                }
+
+                $method['calculations'][] = [
+                    'item'  => sprintf(
+                        'Round up to %01.2f',
+                        $surcharges_round_up_to
+                    ),
+                    'costs' => $round_up_to - $method_cost,
+                ];
+
+                $method['cost'] = $round_up_to;
+            }
+        }
+        /** */
+    }
+}
