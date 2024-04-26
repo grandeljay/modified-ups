@@ -36,7 +36,7 @@ $language_file = \sprintf(
     \grandeljayups::class
 );
 
-require $language_file;
+require_once $language_file;
 
 $simplified_method = \substr($order->info['shipping_class'], \strlen(\grandeljayups::class . '_'));
 $simplified_name   = sprintf(
