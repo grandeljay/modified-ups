@@ -2,7 +2,6 @@
 
 namespace Grandeljay\Ups;
 
-use Grandeljay\ShippingConditions\Surcharges;
 use Grandeljay\Ups\Configuration\Configuration;
 use Grandeljay\Ups\Configuration\Group;
 
@@ -127,9 +126,15 @@ class Quote
             $methods = $this->getForMethod($method_id);
         }
 
-        $surcharges = new Surcharges(\grandeljayups::class, $methods);
-        $surcharges->setSurcharges();
-        $methods = $surcharges->getMethods();
+        if (\class_exists('Grandeljay\ShippingConditions\Surcharges')) {
+            $surcharges = new \Grandeljay\ShippingConditions\Surcharges(
+                \grandeljayups::class,
+                $methods
+            );
+            $surcharges->setSurcharges();
+
+            $methods = $surcharges->getMethods();
+        }
 
         /**
          * Output debug
