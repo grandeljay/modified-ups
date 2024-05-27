@@ -68,13 +68,14 @@ class International extends Method
 
     public function __construct()
     {
+        parent::__construct();
     }
 
     private function getCostsAndCalculations(string $method_group, string $method_name): array
     {
         $calculations = [];
 
-        $total_weight = $this->getWeight();
+        $total_weight = $this->weight;
 
         $costs       = 0;
         $costs_json  = Configuration::get($method_group . '_' . $method_name . '_COSTS');
@@ -154,7 +155,7 @@ class International extends Method
             $method_type               = Configuration::get('SHIPPING_METHOD_' . $method_name);
             $method_type_description   = Configuration::get($method_group_name . '_START_TITLE');
             $method_format             = 'UPS %1$s (%2$s)' . '<!-- BREAK -->' . '<strong>UPS %1$s</strong><br>%3$s';
-            $method_weight             = $this->getWeightFormatted();
+            $method_weight             = $this->weight_formatted;
             $method_costs_calculations = $this->getCostsAndCalculations($method_group_name, $method_name);
             $method_title              = sprintf(
                 $method_format,

@@ -10,6 +10,10 @@ use Grandeljay\Ups\Configuration\Group;
  */
 class Method
 {
+    protected array $boxes             = [];
+    protected float $weight            = 0;
+    protected string $weight_formatted = '';
+
     public static function isEnabled(string $method_name): bool
     {
         $method_is_enabled = 'true' === Configuration::get(Group::SHIPPING_METHODS . '_' . $method_name);
@@ -19,6 +23,17 @@ class Method
 
     public function __construct()
     {
+        $shipping_weight_ideal   = Configuration::get(Group::SHIPPING_WEIGHT . '_IDEAL');
+        $shipping_weight_maximum = Configuration::get(Group::SHIPPING_WEIGHT . '_MAX');
+
+        $order_packer = new \Grandeljay\ShippingModuleHelper\OrderPacker();
+        $order_packer->setIdealWeight($shipping_weight_ideal);
+        $order_packer->setMaximumWeight($shipping_weight_maximum);
+        $order_packer->packOrder();
+
+        $this->boxes            = $order_packer->getBoxes();
+        $this->weight           = $order_packer->getWeight();
+        $this->weight_formatted = $order_packer->getWeightFormatted();
     }
 
     public function isNational(): bool
@@ -39,104 +54,10 @@ class Method
         return $is_international;
     }
 
-    public function getBoxes(): array
-    {
-        global $order;
-
-        $boxes                 = [];
-        $shipping_weight_ideal = Configuration::get(Group::SHIPPING_WEIGHT . '_IDEAL');
-
-        if (null === $order) {
-            return $boxes;
-        }
-
-        foreach ($order->products as $product) {
-            for ($i = 1; $i <= $product['quantity']; $i++) {
-                $product_weight = (float) $product['weight'];
-
-                /** Find a box empty enough to fit product */
-                foreach ($boxes as $box) {
-                    $box_weight          = $box->getWeight();
-                    $box_can_fit_product = $box_weight + $product_weight < $shipping_weight_ideal;
-
-                    if ($box_can_fit_product) {
-                        $box->addProduct($product);
-
-                        continue 2;
-                    }
-                }
-
-                /** Add product to a new box */
-                $box = new Parcel();
-                $box->addProduct($product);
-
-                /** Add box to list */
-                $boxes[] = $box;
-            }
-        }
-
-        return $boxes;
-    }
-
-    public function getWeight(): float
-    {
-        $total_weight = 0;
-
-        foreach ($this->getBoxes() as $box) {
-            $total_weight += $box->getWeight();
-        }
-
-        return $total_weight;
-    }
-
-    protected function getWeightFormatted(): string
-    {
-        $boxes        = $this->getBoxes();
-        $boxes_weight = [];
-
-        foreach ($boxes as $box) {
-            $key = $box->getWeight() . ' kg';
-
-            if (isset($boxes_weight[$key])) {
-                $boxes_weight[$key]++;
-            } else {
-                $boxes_weight[$key] = 1;
-            }
-        }
-
-        $boxes_weight_text = [];
-
-        foreach ($boxes_weight as $weight_text => $quantity) {
-            preg_match('/[\d+\.]+/', $weight_text, $weight_matches);
-
-            $weight = round($weight_matches[0], 2) . ' kg';
-
-            $boxes_weight_text[] = sprintf(
-                '%dx %s',
-                $quantity,
-                $weight
-            );
-        }
-
-        $debug_is_enabled = Configuration::get('DEBUG_ENABLE');
-        $user_is_admin    = isset($_SESSION['customers_status']['customers_status_id']) && 0 === (int) $_SESSION['customers_status']['customers_status_id'];
-
-        if ('true' !== $debug_is_enabled || !$user_is_admin) {
-            $boxes_weight_text = [
-                sprintf(
-                    '%s kg',
-                    round($this->getWeight(), 2)
-                ),
-            ];
-        }
-
-        return implode(', ', $boxes_weight_text);
-    }
-
     protected function setSurcharges(array &$methods): void
     {
-        $boxes        = $this->getBoxes();
-        $total_weight = $this->getWeight();
+        $boxes        = $this->boxes;
+        $total_weight = $this->weight;
 
         /**
          * Surcharges
@@ -221,7 +142,7 @@ class Method
 
                         if ('true' === $surcharge[$key_per_package]) {
                             foreach ($boxes as $box_index => $box) {
-                                $box_weight = $box->getWeight();
+                                $box_weight = $box->getWeightWithAttributes();
 
                                 if ($box_weight < $for_weight) {
                                     continue;
@@ -261,7 +182,7 @@ class Method
 
                         if ('true' === $surcharge[$key_per_package]) {
                             foreach ($boxes as $box_index => $box) {
-                                $box_weight = $box->getWeight();
+                                $box_weight = $box->getWeightWithAttributes();
 
                                 if ($box_weight < $for_weight) {
                                     continue;
@@ -326,7 +247,7 @@ class Method
                 foreach ($pick_and_pack_costs as $pick_and_pack_cost) {
                     $weight_max  = floatval($pick_and_pack_cost['weight-max']);
                     $weight_cost = floatval($pick_and_pack_cost['weight-costs']);
-                    $box_weight  = $box->getWeight();
+                    $box_weight  = $box->getWeightWithAttributes();
 
                     if ($box_weight <= $weight_max) {
                         $method['cost']          += $weight_cost;
