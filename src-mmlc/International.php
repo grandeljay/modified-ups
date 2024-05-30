@@ -124,7 +124,7 @@ class International extends Method
             $costs            += $weight_cost;
             $calculations[]    = [
                 'item'  => sprintf(
-                    'National shipping (%s) for shipment (%01.2f kg)',
+                    'International shipping (%s) for shipment (%01.2f kg)',
                     $method_name,
                     $total_weight
                 ),
