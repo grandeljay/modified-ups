@@ -10,15 +10,10 @@ class ModuleKeys
     {
     }
 
-    private function addKey(string $key): void
-    {
-        $this->parent->addKey($key);
-    }
-
     public function addKeys(): void
     {
-        $this->addkey('SORT_ORDER');
-        $this->addkey('DEBUG_ENABLE');
+        $this->parent->addkey('SORT_ORDER');
+        $this->parent->addkey('DEBUG_ENABLE');
 
         $this->addKeysWeight();
         $this->addKeysMethods();
@@ -29,72 +24,80 @@ class ModuleKeys
 
     private function addKeysWeight(): void
     {
-        $this->addkey(Group::SHIPPING_WEIGHT . '_START');
-        $this->addkey(Group::SHIPPING_WEIGHT . '_MAX');
-        $this->addkey(Group::SHIPPING_WEIGHT . '_IDEAL');
-        $this->addkey(Group::SHIPPING_WEIGHT . '_END');
+        $prefix = Group::SHIPPING_WEIGHT . '_';
+
+        $this->parent->addkey($prefix . 'START');
+        $this->parent->addkey($prefix . 'MAX');
+        $this->parent->addkey($prefix . 'IDEAL');
+        $this->parent->addkey($prefix . 'END');
     }
 
     private function addKeysMethods(): void
     {
-        $this->addkey(Group::SHIPPING_METHODS . '_START');
-        $this->addkey(Group::SHIPPING_METHODS . '_STANDARD');
-        $this->addkey(Group::SHIPPING_METHODS . '_SAVER');
-        $this->addkey(Group::SHIPPING_METHODS . '_1200');
-        $this->addkey(Group::SHIPPING_METHODS . '_EXPRESS');
-        $this->addkey(Group::SHIPPING_METHODS . '_PLUS');
-        $this->addkey(Group::SHIPPING_METHODS . '_EXPEDITED');
-        $this->addkey(Group::SHIPPING_METHODS . '_END');
+        $prefix = Group::SHIPPING_METHODS . '_';
+
+        $this->parent->addkey($prefix . 'START');
+        $this->parent->addkey($prefix . 'STANDARD');
+        $this->parent->addkey($prefix . 'SAVER');
+        $this->parent->addkey($prefix . '1200');
+        $this->parent->addkey($prefix . 'EXPRESS');
+        $this->parent->addkey($prefix . 'PLUS');
+        $this->parent->addkey($prefix . 'EXPEDITED');
+        $this->parent->addkey($prefix . 'END');
     }
 
     private function addKeysShippingNational(): void
     {
-        $this->addkey(Group::SHIPPING_NATIONAL . '_START');
-        $this->addkey(Group::SHIPPING_NATIONAL . '_COUNTRY');
+        $prefix = Group::SHIPPING_NATIONAL . '_';
+
+        $this->parent->addkey($prefix . 'START');
+        $this->parent->addkey($prefix . 'COUNTRY');
 
         foreach (\grandeljayups::$methods[Group::SHIPPING_NATIONAL] as $method) {
-            $method = Group::SHIPPING_NATIONAL . '_' . $method;
+            $method = $prefix . $method;
 
-            $this->addkey($method . '_START');
-            $this->addkey($method . '_COSTS');
-            $this->addkey($method . '_KG');
-            $this->addkey($method . '_MIN');
-            $this->addkey($method . '_END');
+            $this->parent->addkey($method . '_START');
+            $this->parent->addkey($method . '_COSTS');
+            $this->parent->addkey($method . '_KG');
+            $this->parent->addkey($method . '_MIN');
+            $this->parent->addkey($method . '_END');
         }
 
-        $this->addKey(Group::SHIPPING_NATIONAL . '_END');
+        $this->parent->addKey($prefix . 'END');
     }
 
     private function addKeysShippingGroups(): void
     {
         foreach (\grandeljayups::$methods_international as $group) {
-            $this->addKey($group . '_START');
+            $this->parent->addKey($group . '_START');
 
             if (Group::SHIPPING_GROUP_F !== $group) {
-                $this->addKey($group . '_COUNTRIES');
+                $this->parent->addKey($group . '_COUNTRIES');
             }
 
             foreach (\grandeljayups::$methods[$group] as $method_name) {
                 $method_group = $group . '_' . $method_name;
 
-                $this->addKey($method_group . '_START');
-                $this->addKey($method_group . '_COSTS');
-                $this->addKey($method_group . '_KG');
-                $this->addKey($method_group . '_MIN');
-                $this->addKey($method_group . '_END');
+                $this->parent->addKey($method_group . '_START');
+                $this->parent->addKey($method_group . '_COSTS');
+                $this->parent->addKey($method_group . '_KG');
+                $this->parent->addKey($method_group . '_MIN');
+                $this->parent->addKey($method_group . '_END');
             }
 
-            $this->addKey($group . '_END');
+            $this->parent->addKey($group . '_END');
         }
     }
 
     private function addKeysSurcharges(): void
     {
-        $this->addKey(Group::SURCHARGES . '_START');
-        $this->addKey(Group::SURCHARGES . '_SURCHARGES');
-        $this->addKey(Group::SURCHARGES . '_PICK_AND_PACK');
-        $this->addKey(Group::SURCHARGES . '_ROUND_UP');
-        $this->addKey(Group::SURCHARGES . '_ROUND_UP_TO');
-        $this->addKey(Group::SURCHARGES . '_END');
+        $prefix = Group::SURCHARGES . '_';
+
+        $this->parent->addKey($prefix . 'START');
+        $this->parent->addKey($prefix . 'SURCHARGES');
+        $this->parent->addKey($prefix . 'PICK_AND_PACK');
+        $this->parent->addKey($prefix . 'ROUND_UP');
+        $this->parent->addKey($prefix . 'ROUND_UP_TO');
+        $this->parent->addKey($prefix . 'END');
     }
 }
