@@ -19,4 +19,10 @@ class Module
         $installer = new ModuleInstaller($this->parent);
         $installer->install();
     }
+
+    public function uninstall(): void
+    {
+        $uninstaller = new ModuleUninstaller($this->parent);
+        $uninstaller->uninstall();
+    }
 }
