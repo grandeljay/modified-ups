@@ -192,10 +192,13 @@ class grandeljayups extends StdModule
         $this->module->install();
     }
 
-    protected function updateSteps()
+    protected function updateSteps(): int
     {
-        if (-1 === version_compare($this->getVersion(), self::VERSION)) {
-            $this->setVersion(self::VERSION);
+        $version_before_update = $this->getVersion();
+        $version_after_update  = self::VERSION;
+
+        if (version_compare($version_before_update, $version_after_update, '<')) {
+            $this->setVersion($version_after_update);
 
             return self::UPDATE_SUCCESS;
         }
