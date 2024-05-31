@@ -13,4 +13,10 @@ class Module
         $keys = new ModuleKeys($this->parent);
         $keys->addKeys();
     }
+
+    public function install(): void
+    {
+        $installer = new ModuleInstaller($this->parent);
+        $installer->install();
+    }
 }
