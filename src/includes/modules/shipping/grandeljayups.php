@@ -11,7 +11,7 @@
  * @phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
  */
 
-use Grandeljay\Ups\{Constants, Quote};
+use Grandeljay\Ups\{Module, Constants, Quote};
 use Grandeljay\Ups\Configuration\{Group, Field};
 use RobinTheHood\ModifiedStdModule\Classes\{StdModule, CaseConverter};
 
@@ -21,6 +21,8 @@ use RobinTheHood\ModifiedStdModule\Classes\{StdModule, CaseConverter};
 class grandeljayups extends StdModule
 {
     public const VERSION = '0.8.0';
+
+    private Module $module;
 
     public static array $methods_international = [
         Group::SHIPPING_GROUP_A,
@@ -179,106 +181,8 @@ class grandeljayups extends StdModule
         parent::__construct(Constants::MODULE_SHIPPING_NAME);
 
         $this->checkForUpdate(true);
-
-        /**
-         * Sort Order
-         */
-        $this->addkey('SORT_ORDER');
-
-        /**
-         * Debug
-         */
-        $this->addKey('DEBUG_ENABLE');
-        /** */
-
-        /**
-         * Weight
-         */
-        $this->addKey(Group::SHIPPING_WEIGHT . '_START');
-
-        $this->addKey(Group::SHIPPING_WEIGHT . '_MAX');
-        $this->addKey(Group::SHIPPING_WEIGHT . '_IDEAL');
-
-        $this->addKey(Group::SHIPPING_WEIGHT . '_END');
-        /** */
-
-        /**
-         * Methods
-         */
-        $this->addKey(Group::SHIPPING_METHODS . '_START');
-
-        $this->addKey(Group::SHIPPING_METHODS . '_STANDARD');
-        $this->addKey(Group::SHIPPING_METHODS . '_SAVER');
-        $this->addKey(Group::SHIPPING_METHODS . '_1200');
-        $this->addKey(Group::SHIPPING_METHODS . '_EXPRESS');
-        $this->addKey(Group::SHIPPING_METHODS . '_PLUS');
-        $this->addKey(Group::SHIPPING_METHODS . '_EXPEDITED');
-
-        $this->addKey(Group::SHIPPING_METHODS . '_END');
-        /** */
-
-        /**
-         * National
-         */
-        $this->addKey(Group::SHIPPING_NATIONAL . '_START');
-
-        $this->addKey(Group::SHIPPING_NATIONAL . '_COUNTRY');
-
-        foreach (self::$methods[Group::SHIPPING_NATIONAL] as $method) {
-            $method = Group::SHIPPING_NATIONAL . '_' . $method;
-
-            $this->addKey($method . '_START');
-
-            $this->addKey($method . '_COSTS');
-            $this->addKey($method . '_KG');
-            $this->addKey($method . '_MIN');
-
-            $this->addKey($method . '_END');
-        }
-
-        $this->addKey(Group::SHIPPING_NATIONAL . '_END');
-        /** */
-
-        /**
-         * Groups
-         */
-        foreach (self::$methods_international as $group) {
-            $this->addKey($group . '_START');
-
-            if (Group::SHIPPING_GROUP_F !== $group) {
-                $this->addKey($group . '_COUNTRIES');
-            }
-
-            foreach (self::$methods[$group] as $method_name) {
-                $method_group = $group . '_' . $method_name;
-
-                $this->addKey($method_group . '_START');
-
-                $this->addKey($method_group . '_COSTS');
-                $this->addKey($method_group . '_KG');
-                $this->addKey($method_group . '_MIN');
-
-                $this->addKey($method_group . '_END');
-            }
-
-            $this->addKey($group . '_END');
-        }
-        /** */
-
-        /**
-         * Surcharges
-         */
-        $this->addKey(Group::SURCHARGES . '_START');
-
-        $this->addKey(Group::SURCHARGES . '_SURCHARGES');
-
-        $this->addKey(Group::SURCHARGES . '_PICK_AND_PACK');
-
-        $this->addKey(Group::SURCHARGES . '_ROUND_UP');
-        $this->addKey(Group::SURCHARGES . '_ROUND_UP_TO');
-
-        $this->addKey(Group::SURCHARGES . '_END');
-        /** */
+        $this->module = new Module($this);
+        $this->module->addKeys();
     }
 
     public function install()
