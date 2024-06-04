@@ -196,9 +196,9 @@ class grandeljayups extends StdModule
         $order_packer->setMaximumWeight($shipping_weight_maximum);
         $order_packer->packOrder();
 
-        $this->boxes            = $order_packer->getBoxes();
-        $this->weight           = $order_packer->getWeight();
-        $this->weight_formatted = $order_packer->getWeightFormatted();
+        self::$boxes            = $order_packer->getBoxes();
+        self::$weight           = $order_packer->getWeight();
+        self::$weight_formatted = $order_packer->getWeightFormatted();
     }
 
     public function stdAddKey(string $key): void
