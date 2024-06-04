@@ -20,7 +20,7 @@ use RobinTheHood\ModifiedStdModule\Classes\{StdModule, CaseConverter};
  */
 class grandeljayups extends StdModule
 {
-    public const VERSION = '0.8.1';
+    public const VERSION = '0.8.2';
 
     private Module $module;
 
