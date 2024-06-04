@@ -10,10 +10,6 @@ use Grandeljay\Ups\Configuration\Group;
  */
 class Method
 {
-    protected array $boxes             = [];
-    protected float $weight            = 0;
-    protected string $weight_formatted = '';
-
     public static function isEnabled(string $method_name): bool
     {
         $method_is_enabled = 'true' === Configuration::get(Group::SHIPPING_METHODS . '_' . $method_name);
@@ -23,17 +19,6 @@ class Method
 
     public function __construct()
     {
-        $shipping_weight_ideal   = Configuration::get(Group::SHIPPING_WEIGHT . '_IDEAL');
-        $shipping_weight_maximum = Configuration::get(Group::SHIPPING_WEIGHT . '_MAX');
-
-        $order_packer = new \Grandeljay\ShippingModuleHelper\OrderPacker();
-        $order_packer->setIdealWeight($shipping_weight_ideal);
-        $order_packer->setMaximumWeight($shipping_weight_maximum);
-        $order_packer->packOrder();
-
-        $this->boxes            = $order_packer->getBoxes();
-        $this->weight           = $order_packer->getWeight();
-        $this->weight_formatted = $order_packer->getWeightFormatted();
     }
 
     public function isNational(): bool
@@ -56,8 +41,8 @@ class Method
 
     protected function setSurcharges(array &$methods): void
     {
-        $boxes        = $this->boxes;
-        $total_weight = $this->weight;
+        $boxes        = \grandeljayups::$boxes;
+        $total_weight = \grandeljayups::$weight;
 
         /**
          * Surcharges

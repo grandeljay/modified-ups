@@ -12,7 +12,7 @@
  */
 
 use Grandeljay\Ups\{Module, Constants, Quote};
-use Grandeljay\Ups\Configuration\{Group, Field};
+use Grandeljay\Ups\Configuration\{Group, Configuration};
 use RobinTheHood\ModifiedStdModule\Classes\{StdModule, CaseConverter};
 
 /**
@@ -176,6 +176,10 @@ class grandeljayups extends StdModule
      */
     public int $tax_class = 1;
 
+    public static array $boxes             = [];
+    public static float $weight            = 0;
+    public static string $weight_formatted = '';
+
     public function __construct()
     {
         parent::__construct(Constants::MODULE_SHIPPING_NAME);
@@ -183,6 +187,18 @@ class grandeljayups extends StdModule
         $this->checkForUpdate(true);
         $this->module = new Module($this);
         $this->module->addKeys();
+
+        $shipping_weight_ideal   = Configuration::get(Group::SHIPPING_WEIGHT . '_IDEAL');
+        $shipping_weight_maximum = Configuration::get(Group::SHIPPING_WEIGHT . '_MAX');
+
+        $order_packer = new \Grandeljay\ShippingModuleHelper\OrderPacker();
+        $order_packer->setIdealWeight($shipping_weight_ideal);
+        $order_packer->setMaximumWeight($shipping_weight_maximum);
+        $order_packer->packOrder();
+
+        $this->boxes            = $order_packer->getBoxes();
+        $this->weight           = $order_packer->getWeight();
+        $this->weight_formatted = $order_packer->getWeightFormatted();
     }
 
     public function stdAddKey(string $key): void
