@@ -185,6 +185,11 @@ class grandeljayups extends StdModule
         $this->module->addKeys();
     }
 
+    public function stdAddKey(string $key): void
+    {
+        $this->addKey($key);
+    }
+
     public function install()
     {
         parent::install();
