@@ -4,12 +4,17 @@ namespace Grandeljay\Ups;
 
 use Grandeljay\Ups\Configuration\Configuration;
 use Grandeljay\Ups\Configuration\Group;
+use Grandeljay\ShippingModuleHelper\OrderPacker;
 
 /**
  * A modified-shop shipping method for UPS.
  */
 class Method
 {
+    protected array $boxes;
+    protected float $weight;
+    protected string $weight_formatted;
+
     public static function isEnabled(string $method_name): bool
     {
         $method_is_enabled = 'true' === Configuration::get(Group::SHIPPING_METHODS . '_' . $method_name);
@@ -19,6 +24,21 @@ class Method
 
     public function __construct()
     {
+    }
+
+    public function calculateWeight(): void
+    {
+        $shipping_weight_ideal   = Configuration::get(Group::SHIPPING_WEIGHT . '_IDEAL');
+        $shipping_weight_maximum = Configuration::get(Group::SHIPPING_WEIGHT . '_MAX');
+
+        $order_packer = new OrderPacker();
+        $order_packer->setIdealWeight($shipping_weight_ideal);
+        $order_packer->setMaximumWeight($shipping_weight_maximum);
+        $order_packer->packOrder();
+
+        $this->boxes            = $order_packer->getBoxes();
+        $this->weight           = $order_packer->getWeight();
+        $this->weight_formatted = $order_packer->getWeightFormatted();
     }
 
     public function isNational(): bool
@@ -41,8 +61,8 @@ class Method
 
     protected function setSurcharges(array &$methods): void
     {
-        $boxes        = \grandeljayups::$boxes;
-        $total_weight = \grandeljayups::$weight;
+        $boxes        = $this->boxes;
+        $total_weight = $this->weight;
 
         /**
          * Surcharges

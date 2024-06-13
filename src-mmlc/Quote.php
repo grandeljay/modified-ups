@@ -46,12 +46,14 @@ class Quote
 
         if ($method->isNational()) {
             $national = new National();
+            $national->calculateWeight();
 
             $methods = $national->getMethods();
         }
 
         if ($method->isInternational()) {
             $international = new International();
+            $international->calculateWeight();
 
             $methods = $international->getMethods();
         }
