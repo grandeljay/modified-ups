@@ -12,9 +12,9 @@ class ModuleUninstaller
 
     public function uninstall(): void
     {
-        $this->parent->removeConfiguration('ALLOWED');
-        $this->parent->removeConfiguration('SORT_ORDER');
-        $this->parent->removeConfiguration('DEBUG_ENABLE');
+        $this->parent->stdRemoveConfiguration('ALLOWED');
+        $this->parent->stdRemoveConfiguration('SORT_ORDER');
+        $this->parent->stdRemoveConfiguration('DEBUG_ENABLE');
 
         $this->uninstallWeight();
         $this->uninstallMethods();
@@ -28,66 +28,66 @@ class ModuleUninstaller
     {
         $prefix = Group::SHIPPING_WEIGHT . '_';
 
-        $this->parent->removeConfiguration($prefix . 'START');
-        $this->parent->removeConfiguration($prefix . 'MAX');
-        $this->parent->removeConfiguration($prefix . 'IDEAL');
-        $this->parent->removeConfiguration($prefix . 'END');
+        $this->parent->stdRemoveConfiguration($prefix . 'START');
+        $this->parent->stdRemoveConfiguration($prefix . 'MAX');
+        $this->parent->stdRemoveConfiguration($prefix . 'IDEAL');
+        $this->parent->stdRemoveConfiguration($prefix . 'END');
     }
 
     private function uninstallMethods(): void
     {
         $prefix = Group::SHIPPING_METHODS . '_';
 
-        $this->parent->removeConfiguration($prefix . 'START');
-        $this->parent->removeConfiguration($prefix . 'STANDARD');
-        $this->parent->removeConfiguration($prefix . 'SAVER');
-        $this->parent->removeConfiguration($prefix . '1200');
-        $this->parent->removeConfiguration($prefix . 'EXPRESS');
-        $this->parent->removeConfiguration($prefix . 'PLUS');
-        $this->parent->removeConfiguration($prefix . 'EXPEDITED');
-        $this->parent->removeConfiguration($prefix . 'END');
+        $this->parent->stdRemoveConfiguration($prefix . 'START');
+        $this->parent->stdRemoveConfiguration($prefix . 'STANDARD');
+        $this->parent->stdRemoveConfiguration($prefix . 'SAVER');
+        $this->parent->stdRemoveConfiguration($prefix . '1200');
+        $this->parent->stdRemoveConfiguration($prefix . 'EXPRESS');
+        $this->parent->stdRemoveConfiguration($prefix . 'PLUS');
+        $this->parent->stdRemoveConfiguration($prefix . 'EXPEDITED');
+        $this->parent->stdRemoveConfiguration($prefix . 'END');
     }
 
     private function uninstallShippingNational(): void
     {
         $prefix = Group::SHIPPING_NATIONAL . '_';
 
-        $this->parent->removeConfiguration($prefix . 'START');
-        $this->parent->removeConfiguration($prefix . 'COUNTRY');
+        $this->parent->stdRemoveConfiguration($prefix . 'START');
+        $this->parent->stdRemoveConfiguration($prefix . 'COUNTRY');
 
         foreach (\grandeljayups::$methods[Group::SHIPPING_NATIONAL] as $method) {
             $method = $prefix . $method;
 
-            $this->parent->removeConfiguration($method . '_START');
-            $this->parent->removeConfiguration($method . '_COSTS');
-            $this->parent->removeConfiguration($method . '_KG');
-            $this->parent->removeConfiguration($method . '_MIN');
-            $this->parent->removeConfiguration($method . '_END');
+            $this->parent->stdRemoveConfiguration($method . '_START');
+            $this->parent->stdRemoveConfiguration($method . '_COSTS');
+            $this->parent->stdRemoveConfiguration($method . '_KG');
+            $this->parent->stdRemoveConfiguration($method . '_MIN');
+            $this->parent->stdRemoveConfiguration($method . '_END');
         }
 
-        $this->parent->removeConfiguration($prefix . 'END');
+        $this->parent->stdRemoveConfiguration($prefix . 'END');
     }
 
     private function uninstallShippingGroups(): void
     {
         foreach (\grandeljayups::$methods_international as $group) {
-            $this->parent->removeConfiguration($group . '_START');
+            $this->parent->stdRemoveConfiguration($group . '_START');
 
             if (Group::SHIPPING_GROUP_F !== $group) {
-                $this->parent->removeConfiguration($group . '_COUNTRIES');
+                $this->parent->stdRemoveConfiguration($group . '_COUNTRIES');
             }
 
             foreach (\grandeljayups::$methods[$group] as $method_name) {
                 $method_group = $group . '_' . $method_name;
 
-                $this->parent->removeConfiguration($method_group . '_START');
-                $this->parent->removeConfiguration($method_group . '_COSTS');
-                $this->parent->removeConfiguration($method_group . '_KG');
-                $this->parent->removeConfiguration($method_group . '_MIN');
-                $this->parent->removeConfiguration($method_group . '_END');
+                $this->parent->stdRemoveConfiguration($method_group . '_START');
+                $this->parent->stdRemoveConfiguration($method_group . '_COSTS');
+                $this->parent->stdRemoveConfiguration($method_group . '_KG');
+                $this->parent->stdRemoveConfiguration($method_group . '_MIN');
+                $this->parent->stdRemoveConfiguration($method_group . '_END');
             }
 
-            $this->parent->removeConfiguration($group . '_END');
+            $this->parent->stdRemoveConfiguration($group . '_END');
         }
     }
 
@@ -95,20 +95,20 @@ class ModuleUninstaller
     {
         $prefix = Group::SURCHARGES . '_';
 
-        $this->parent->removeConfiguration($prefix . 'START');
-        $this->parent->removeConfiguration($prefix . 'SURCHARGES');
-        $this->parent->removeConfiguration($prefix . 'PICK_AND_PACK');
-        $this->parent->removeConfiguration($prefix . 'ROUND_UP');
-        $this->parent->removeConfiguration($prefix . 'ROUND_UP_TO');
-        $this->parent->removeConfiguration($prefix . 'END');
+        $this->parent->stdRemoveConfiguration($prefix . 'START');
+        $this->parent->stdRemoveConfiguration($prefix . 'SURCHARGES');
+        $this->parent->stdRemoveConfiguration($prefix . 'PICK_AND_PACK');
+        $this->parent->stdRemoveConfiguration($prefix . 'ROUND_UP');
+        $this->parent->stdRemoveConfiguration($prefix . 'ROUND_UP_TO');
+        $this->parent->stdRemoveConfiguration($prefix . 'END');
     }
 
     private function uninstallBulkPriceChangePreview(): void
     {
         $prefix = Group::BULK_PRICE . '_';
 
-        $this->parent->removeConfiguration($prefix . 'START');
-        $this->parent->removeConfiguration($prefix . 'FACTOR');
-        $this->parent->removeConfiguration($prefix . 'END');
+        $this->parent->stdRemoveConfiguration($prefix . 'START');
+        $this->parent->stdRemoveConfiguration($prefix . 'FACTOR');
+        $this->parent->stdRemoveConfiguration($prefix . 'END');
     }
 }

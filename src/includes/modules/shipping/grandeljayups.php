@@ -190,6 +190,38 @@ class grandeljayups extends StdModule
         $this->addKey($key);
     }
 
+    public function stdAddConfiguration(
+        string $key,
+        string $value = '',
+        int $group_id = 6,
+        int $sort_order = 1,
+        string $set_function = '',
+        string $use_function = ''
+    ): void {
+        $this->addConfiguration(
+            $key,
+            $value,
+            $group_id,
+            $sort_order,
+            $set_function,
+            $use_function
+        );
+    }
+
+    public function stdAddConfigurationSelect(
+        string $key,
+        string $value = '',
+        int $group_id = 6,
+        int $sort_order = 1
+    ): void {
+        $this->addConfiguration($key, $value, $group_id, $sort_order, 'select');
+    }
+
+    public function stdRemoveConfiguration(string $key): void
+    {
+        $this->removeConfiguration($key);
+    }
+
     public function install()
     {
         parent::install();
