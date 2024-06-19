@@ -50,6 +50,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
         return true;
     });
+
+    let factor_preview = document.getElementById('factor-preview');
+
+    if (factor_preview) {
+        factor_preview.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            let input_factor = document.querySelector('[name="factor"]');
+            let factor       = input_factor.value;
+            let href         = this.getAttribute('href');
+
+            href = href.replace(/factor=[\d\.]+/, 'factor=' + factor);
+
+            window.location.href = href;
+        });
+    }
 });
 
 function expandInputToPopup(option) {

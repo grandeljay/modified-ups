@@ -1420,9 +1420,8 @@ class Field
 
     public static function bulkPriceFactor(string $value, string $option): string
     {
-        $page       = \xtc_href_link_admin(\DIR_ADMIN . \FILENAME_MODULES);
-        $factor     = $_GET['factor'] ?? 1;
-        $paramaters = \http_build_query(
+        $page               = \xtc_href_link_admin(\DIR_ADMIN . \FILENAME_MODULES);
+        $factor             = $_GET['factor'] ?? 1;
             [
                 'set'    => $_GET['set'],
                 'module' => $_GET['module'],
@@ -1430,7 +1429,8 @@ class Field
                 'factor' => $factor,
             ]
         );
-        $href       = $page . '?' . $paramaters;
+        $preview_parameters = \array_merge($reset_parameters, ['factor' => $factor]);
+        $preview_href       = $page . '?' . $preview_parameters;
 
         $text_preview_title = \constant(Constants::MODULE_SHIPPING_NAME . '_' . Group::BULK_PRICE . '_FACTOR_PREVIEW_TITLE');
         $text_preview_desc  = \constant(Constants::MODULE_SHIPPING_NAME . '_' . Group::BULK_PRICE . '_FACTOR_PREVIEW_DESC');
@@ -1439,7 +1439,7 @@ class Field
         ?>
         <input type="number" name="factor" value="<?= $factor ?>" step="any">
 
-        <a href="<?= $href ?>" class="button"><?= $text_preview_title ?></a>
+        <a href="<?= $preview_href ?>" class="button" id="factor-preview"><?= $text_preview_title ?></a>
 
         <?php if (isset($_GET['factor'])) { ?>
             <p><?= $text_preview_desc ?></p>

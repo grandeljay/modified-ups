@@ -248,14 +248,16 @@ $translations_surcharges = [
  * Bulk Price Change Preview
  */
 $translations_bulk_price = [
-    Group::BULK_PRICE . '_START_TITLE'  => 'Cambio de precio a granel',
-    Group::BULK_PRICE . '_START_DESC'   => 'Multiplica todos los precios de envío del módulo por un factor. Los cambios son sólo una vista previa. Los valores no son definitivos hasta que se guardan. Antes, el factor puede modificarse varias veces sin que cambien los precios.',
+    Group::BULK_PRICE . '_START_TITLE'          => 'Cambio de precio a granel',
+    Group::BULK_PRICE . '_START_DESC'           => 'Multiplica todos los precios de envío del módulo por un factor. Los cambios son sólo una vista previa. Los valores no son definitivos hasta que se guardan. Antes, el factor puede modificarse tantas veces como sea necesario sin que cambien realmente los precios.',
 
-    Group::BULK_PRICE . '_FACTOR_TITLE' => 'Factor',
-    Group::BULK_PRICE . '_FACTOR_DESC'  => '¿Por qué factor deben ajustarse los precios de envío?',
+    Group::BULK_PRICE . '_FACTOR_TITLE'         => 'Factor',
+    Group::BULK_PRICE . '_FACTOR_DESC'          => '¿Por qué factor deben ajustarse los precios de envío?',
+    Group::BULK_PRICE . '_FACTOR_PREVIEW_TITLE' => 'Vista previa',
+    Group::BULK_PRICE . '_FACTOR_PREVIEW_DESC'  => 'La vista previa de los factores está activa. Compruebe todos los precios y haga clic en "Actualizar" para aplicar los ajustes de forma permanente. De lo contrario, haga clic en "Cancelar".',
 
-    Group::BULK_PRICE . '_END_TITLE'    => '',
-    Group::BULK_PRICE . '_END_DESC'     => '',
+    Group::BULK_PRICE . '_END_TITLE'            => '',
+    Group::BULK_PRICE . '_END_DESC'             => '',
 ];
 
 /**
