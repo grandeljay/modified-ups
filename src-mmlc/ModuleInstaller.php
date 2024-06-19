@@ -83,12 +83,11 @@ class ModuleInstaller
 
         foreach (\grandeljayups::$methods[Group::SHIPPING_NATIONAL] as $method_name) {
             $method_group = $prefix . $method_name;
-            $method_title = $this->getConfiguration('SHIPPING_METHOD_' . $method_name);
             $method_costs = $costs[$method_group]['costs'];
             $method_kg    = $costs[$method_group]['kg'];
             $method_min   = $costs[$method_group]['min'];
 
-            $this->parent->stdAddConfiguration($method_group . '_START', $method_title, 6, 1, $set_function);
+            $this->parent->stdAddConfiguration($method_group . '_START', '', 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_COSTS', $method_costs, 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_KG', $method_kg, 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_MIN', $method_min, 6, 1, $set_function);
@@ -120,12 +119,11 @@ class ModuleInstaller
 
         foreach (\grandeljayups::$methods[Group::SHIPPING_GROUP_A] as $method_name) {
             $method_group = $prefix . $method_name;
-            $method_title = $this->getConfiguration('SHIPPING_METHOD_' . $method_name);
             $method_costs = $costs[$method_group]['costs'];
             $method_kg    = $costs[$method_group]['kg'];
             $method_min   = $costs[$method_group]['min'];
 
-            $this->parent->stdAddConfiguration($method_group . '_START', $method_title, 6, 1, $set_function);
+            $this->parent->stdAddConfiguration($method_group . '_START', '', 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_COSTS', $method_costs, 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_KG', $method_kg, 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_MIN', $method_min, 6, 1, $set_function);
@@ -147,12 +145,11 @@ class ModuleInstaller
 
         foreach (\grandeljayups::$methods[Group::SHIPPING_GROUP_B] as $method_name) {
             $method_group = $prefix . $method_name;
-            $method_title = $this->getConfiguration('SHIPPING_METHOD_' . $method_name);
             $method_costs = $costs[$method_group]['costs'];
             $method_kg    = $costs[$method_group]['kg'];
             $method_min   = $costs[$method_group]['min'];
 
-            $this->parent->stdAddConfiguration($method_group . '_START', $method_title, 6, 1, $set_function);
+            $this->parent->stdAddConfiguration($method_group . '_START', '', 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_COSTS', $method_costs, 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_KG', $method_kg, 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_MIN', $method_min, 6, 1, $set_function);
@@ -174,12 +171,11 @@ class ModuleInstaller
 
         foreach (\grandeljayups::$methods[Group::SHIPPING_GROUP_C] as $method_name) {
             $method_group = $prefix . $method_name;
-            $method_title = $this->getConfiguration('SHIPPING_METHOD_' . $method_name);
             $method_costs = $costs[$method_group]['costs'];
             $method_kg    = $costs[$method_group]['kg'];
             $method_min   = $costs[$method_group]['min'];
 
-            $this->parent->stdAddConfiguration($method_group . '_START', $method_title, 6, 1, $set_function);
+            $this->parent->stdAddConfiguration($method_group . '_START', '', 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_COSTS', $method_costs, 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_KG', $method_kg, 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_MIN', $method_min, 6, 1, $set_function);
@@ -201,12 +197,11 @@ class ModuleInstaller
 
         foreach (\grandeljayups::$methods[Group::SHIPPING_GROUP_D] as $method_name) {
             $method_group = $prefix . $method_name;
-            $method_title = $this->getConfiguration('SHIPPING_METHOD_' . $method_name);
             $method_costs = $costs[$method_group]['costs'];
             $method_kg    = $costs[$method_group]['kg'];
             $method_min   = $costs[$method_group]['min'];
 
-            $this->parent->stdAddConfiguration($method_group . '_START', $method_title, 6, 1, $set_function);
+            $this->parent->stdAddConfiguration($method_group . '_START', '', 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_COSTS', $method_costs, 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_KG', $method_kg, 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_MIN', $method_min, 6, 1, $set_function);
@@ -228,12 +223,11 @@ class ModuleInstaller
 
         foreach (\grandeljayups::$methods[Group::SHIPPING_GROUP_E] as $method_name) {
             $method_group = $prefix . $method_name;
-            $method_title = $this->getConfiguration('SHIPPING_METHOD_' . $method_name);
             $method_costs = $costs[$method_group]['costs'];
             $method_kg    = $costs[$method_group]['kg'];
             $method_min   = $costs[$method_group]['min'];
 
-            $this->parent->stdAddConfiguration($method_group . '_START', $method_title, 6, 1, $set_function);
+            $this->parent->stdAddConfiguration($method_group . '_START', '', 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_COSTS', $method_costs, 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_KG', $method_kg, 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_MIN', $method_min, 6, 1, $set_function);
@@ -254,12 +248,11 @@ class ModuleInstaller
 
         foreach (\grandeljayups::$methods[Group::SHIPPING_GROUP_F] as $method_name) {
             $method_group = $prefix . $method_name;
-            $method_title = $this->getConfiguration('SHIPPING_METHOD_' . $method_name);
             $method_costs = $costs[$method_group]['costs'];
             $method_kg    = $costs[$method_group]['kg'];
             $method_min   = $costs[$method_group]['min'];
 
-            $this->parent->stdAddConfiguration($method_group . '_START', $method_title, 6, 1, $set_function);
+            $this->parent->stdAddConfiguration($method_group . '_START', '', 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_COSTS', $method_costs, 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_KG', $method_kg, 6, 1, $set_function);
             $this->parent->stdAddConfiguration($method_group . '_MIN', $method_min, 6, 1, $set_function);
@@ -364,7 +357,7 @@ class ModuleInstaller
         $set_function = \grandeljayups::class . '::setFunction(';
 
         $this->parent->stdAddConfiguration($prefix . 'START', '', 6, 1, $set_function);
-        $this->parent->stdAddConfiguration($prefix . 'FACTOR', '1', 6, 1, $set_function);
+        $this->parent->stdAddConfiguration($prefix . 'FACTOR', '', 6, 1, $set_function);
         $this->parent->stdAddConfiguration($prefix . 'END', '', 6, 1, $set_function);
     }
 }

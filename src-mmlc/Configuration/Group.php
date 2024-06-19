@@ -91,7 +91,7 @@ class Group
     /** Standard */
     public static function shippingStandardStart(string $value, string $option): string
     {
-        $title = \constant($option . '_TITLE');
+        $title = \constant(Constants::MODULE_SHIPPING_NAME . '_SHIPPING_METHOD_STANDARD');
 
         return self::start('<h3>' . $title . '</h3>', $option);
     }
@@ -104,7 +104,7 @@ class Group
     /** Expedited */
     public static function shippingExpeditedStart(string $value, string $option): string
     {
-        $title = \constant($option . '_TITLE');
+        $title = \constant(Constants::MODULE_SHIPPING_NAME . '_SHIPPING_METHOD_EXPEDITED');
 
         return self::start('<h3>' . $title . '</h3>', $option);
     }
@@ -117,7 +117,7 @@ class Group
     /** Saver */
     public static function shippingSaverStart(string $value, string $option): string
     {
-        $title = \constant($option . '_TITLE');
+        $title = \constant(Constants::MODULE_SHIPPING_NAME . '_SHIPPING_METHOD_SAVER');
 
         return self::start('<h3>' . $title . '</h3>', $option);
     }
@@ -130,7 +130,7 @@ class Group
     /** 12:00 */
     public static function shipping1200Start(string $value, string $option): string
     {
-        $title = \constant($option . '_TITLE');
+        $title = \constant(Constants::MODULE_SHIPPING_NAME . '_SHIPPING_METHOD_1200');
 
         return self::start('<h3>' . $title . '</h3>', $option);
     }
@@ -143,7 +143,7 @@ class Group
     /** Express */
     public static function shippingExpressStart(string $value, string $option): string
     {
-        $title = \constant($option . '_TITLE');
+        $title = \constant(Constants::MODULE_SHIPPING_NAME . '_SHIPPING_METHOD_EXPRESS');
 
         return self::start('<h3>' . $title . '</h3>', $option);
     }
@@ -156,7 +156,7 @@ class Group
     /** Plus */
     public static function shippingPlusStart(string $value, string $option): string
     {
-        $title = \constant($option . '_TITLE');
+        $title = \constant(Constants::MODULE_SHIPPING_NAME . '_SHIPPING_METHOD_PLUS');
 
         return self::start('<h3>' . $title . '</h3>', $option);
     }
