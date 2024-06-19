@@ -1417,4 +1417,37 @@ class Field
 
         return $html;
     }
+
+    public static function bulkPriceFactor(string $value, string $option): string
+    {
+        $page       = \xtc_href_link_admin(\DIR_ADMIN . \FILENAME_MODULES);
+        $factor     = $_GET['factor'] ?? 1;
+        $paramaters = \http_build_query(
+            [
+                'set'    => $_GET['set'],
+                'module' => $_GET['module'],
+                'action' => $_GET['action'],
+                'factor' => $factor,
+            ]
+        );
+        $href       = $page . '?' . $paramaters;
+
+        $text_preview_title = \constant(Constants::MODULE_SHIPPING_NAME . '_' . Group::BULK_PRICE . '_FACTOR_PREVIEW_TITLE');
+        $text_preview_desc  = \constant(Constants::MODULE_SHIPPING_NAME . '_' . Group::BULK_PRICE . '_FACTOR_PREVIEW_DESC');
+
+        \ob_start();
+        ?>
+        <input type="number" name="factor" value="<?= $factor ?>" step="any">
+
+        <a href="<?= $href ?>" class="button"><?= $text_preview_title ?></a>
+
+        <?php if (isset($_GET['factor'])) { ?>
+            <p><?= $text_preview_desc ?></p>
+        <?php } ?>
+
+        <?php
+        $html = \ob_get_clean();
+
+        return $html;
+    }
 }

@@ -9,3 +9,4 @@
  */
 
 define('STORE_COUNTRY', '');
+define('FILENAME_MODULES', '');

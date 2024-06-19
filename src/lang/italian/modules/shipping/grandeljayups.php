@@ -248,14 +248,16 @@ $translations_surcharges = [
  * Bulk Price Change Preview
  */
 $translations_bulk_price = [
-    Group::BULK_PRICE . '_START_TITLE'  => 'Variazione del prezzo alla rinfusa',
-    Group::BULK_PRICE . '_START_DESC'   => 'Moltiplica tutti i prezzi di spedizione nel modulo per un fattore. Le modifiche sono solo un\'anteprima. I valori non sono definitivi finché non vengono salvati. Prima di allora, il fattore può essere modificato un numero qualsiasi di volte senza che i prezzi cambino effettivamente.',
+    Group::BULK_PRICE . '_START_TITLE'          => 'Variazione del prezzo alla rinfusa',
+    Group::BULK_PRICE . '_START_DESC'           => 'Moltiplica tutti i prezzi di spedizione nel modulo per un fattore. Le modifiche sono solo un\'anteprima. I valori non sono definitivi finché non vengono salvati. Prima di allora, il fattore può essere modificato un numero qualsiasi di volte senza che i prezzi cambino effettivamente.',
 
-    Group::BULK_PRICE . '_FACTOR_TITLE' => 'Fattore',
-    Group::BULK_PRICE . '_FACTOR_DESC'  => 'In base a quale fattore dovrebbero essere adeguati i prezzi di spedizione?',
+    Group::BULK_PRICE . '_FACTOR_TITLE'         => 'Fattore',
+    Group::BULK_PRICE . '_FACTOR_DESC'          => 'In base a quale fattore dovrebbero essere adeguati i prezzi di spedizione?',
+    Group::BULK_PRICE . '_FACTOR_PREVIEW_TITLE' => 'Anteprima',
+    Group::BULK_PRICE . '_FACTOR_PREVIEW_DESC'  => 'L\'anteprima del fattore è attiva! Controllare tutti i prezzi e fare clic su "Aggiorna" per applicare le impostazioni in modo permanente. Altrimenti, fare clic su "Annulla".',
 
-    Group::BULK_PRICE . '_END_TITLE'    => '',
-    Group::BULK_PRICE . '_END_DESC'     => '',
+    Group::BULK_PRICE . '_END_TITLE'            => '',
+    Group::BULK_PRICE . '_END_DESC'             => '',
 ];
 
 /**
