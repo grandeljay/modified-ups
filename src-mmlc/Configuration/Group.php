@@ -11,10 +11,19 @@ class Group
     {
         $key_without_module_name = substr($option, strlen(Constants::MODULE_SHIPPING_NAME) + 1);
         $key_lisp                = CaseConverter::screamingToLisp($key_without_module_name);
+        $classes                 = [
+            $key_lisp,
+        ];
+
+        if (isset($_GET['factor']) && ('shipping-group-' === \substr($key_lisp, 0, 15)) || 'bulk-price-start' === $key_lisp) {
+            $classes[] = 'factor-active';
+        }
+
+        $class = \implode(' ', $classes);
 
         ob_start();
         ?>
-        <details class="<?= $key_lisp ?>">
+        <details class="<?= $class ?>">
             <summary><?= $value ?></summary>
             <div>
         <?php
