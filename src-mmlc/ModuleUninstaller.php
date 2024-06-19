@@ -72,10 +72,7 @@ class ModuleUninstaller
     {
         foreach (\grandeljayups::$methods_international as $group) {
             $this->parent->stdRemoveConfiguration($group . '_START');
-
-            if (Group::SHIPPING_GROUP_F !== $group) {
-                $this->parent->stdRemoveConfiguration($group . '_COUNTRIES');
-            }
+            $this->parent->stdRemoveConfiguration($group . '_COUNTRIES');
 
             foreach (\grandeljayups::$methods[$group] as $method_name) {
                 $method_group = $group . '_' . $method_name;
