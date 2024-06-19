@@ -249,7 +249,7 @@ $translations_surcharges = [
  */
 $translations_bulk_price = [
     Group::BULK_PRICE . '_START_TITLE'  => 'Bulk Preisänderung',
-    Group::BULK_PRICE . '_START_DESC'   => 'Multipliziert alle Versandpreise im Modul um einen Faktor. Die Änderungen sind hierbei lediglich eine Vorschau. Erst beim Speichern werden die Werte final übernommen. Davor kann der Faktor belibig oft geändert werden, ohne dass sich die Preise tatsächlich verändern.',
+    Group::BULK_PRICE . '_START_DESC'   => 'Multipliziert alle Versandpreise im Modul um einen Faktor. Die Änderungen sind hierbei lediglich eine Vorschau. Erst beim Speichern werden die Werte final übernommen. Davor kann der Faktor beliebig oft geändert werden, ohne dass sich die Preise tatsächlich verändern.',
 
     Group::BULK_PRICE . '_FACTOR_TITLE' => 'Faktor',
     Group::BULK_PRICE . '_FACTOR_DESC'  => 'Um welchen Faktor sollen die Versandpreise angepasst werden?',
