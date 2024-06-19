@@ -21,6 +21,7 @@ class ModuleUninstaller
         $this->uninstallShippingNational();
         $this->uninstallShippingGroups();
         $this->uninstallSurcharges();
+        $this->uninstallBulkPriceChangePreview();
     }
 
     private function uninstallWeight(): void
@@ -99,6 +100,15 @@ class ModuleUninstaller
         $this->parent->removeConfiguration($prefix . 'PICK_AND_PACK');
         $this->parent->removeConfiguration($prefix . 'ROUND_UP');
         $this->parent->removeConfiguration($prefix . 'ROUND_UP_TO');
+        $this->parent->removeConfiguration($prefix . 'END');
+    }
+
+    private function uninstallBulkPriceChangePreview(): void
+    {
+        $prefix = Group::BULK_PRICE . '_';
+
+        $this->parent->removeConfiguration($prefix . 'START');
+        $this->parent->removeConfiguration($prefix . 'FACTOR');
         $this->parent->removeConfiguration($prefix . 'END');
     }
 }

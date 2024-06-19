@@ -162,4 +162,19 @@ class Group
     {
         return self::end($value, $option);
     }
+
+    /**
+     * Bulk Price Change Preview
+     */
+    public const BULK_PRICE = 'BULK_PRICE';
+
+    public static function bulkPriceStart(string $value, string $option): string
+    {
+        return self::start('<h2>' . $value . '</h2>', $option);
+    }
+
+    public static function bulkPriceEnd(string $value, string $option): string
+    {
+        return self::end($value, $option);
+    }
 }

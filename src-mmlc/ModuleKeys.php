@@ -20,6 +20,7 @@ class ModuleKeys
         $this->addKeysShippingNational();
         $this->addKeysShippingGroups();
         $this->addKeysSurcharges();
+        $this->addKeysBulkPriceChangePreview();
     }
 
     private function addKeysWeight(): void
@@ -99,5 +100,12 @@ class ModuleKeys
         $this->parent->stdAddKey($prefix . 'ROUND_UP');
         $this->parent->stdAddKey($prefix . 'ROUND_UP_TO');
         $this->parent->stdAddKey($prefix . 'END');
+    }
+
+    private function addKeysBulkPriceChangePreview(): void
+    {
+        $prefix = Group::BULK_PRICE . '_';
+
+        $this->parent->stdAddKey($prefix . 'FACTOR');
     }
 }

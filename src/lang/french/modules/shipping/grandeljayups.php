@@ -245,6 +245,20 @@ $translations_surcharges = [
 ];
 
 /**
+ * Bulk Price Change Preview
+ */
+$translations_bulk_price = [
+    Group::BULK_PRICE . '_START_TITLE'  => 'Changement de prix en vrac',
+    Group::BULK_PRICE . '_START_DESC'   => 'Multiplie tous les prix d\'expédition du module par un facteur. Les modifications ne sont qu\'un aperçu. Ce n\'est qu\'au moment de l\'enregistrement que les valeurs sont définitivement prises en compte. Avant cela, le facteur peut être modifié autant de fois que nécessaire, sans que les prix ne changent réellement.',
+
+    Group::BULK_PRICE . '_FACTOR_TITLE' => 'Facteur',
+    Group::BULK_PRICE . '_FACTOR_DESC'  => 'De quel facteur les prix d\'expédition doivent-ils être adaptés ?',
+
+    Group::BULK_PRICE . '_END_TITLE'    => '',
+    Group::BULK_PRICE . '_END_DESC'     => '',
+];
+
+/**
  * Define
  */
 $translations = array_merge(
@@ -254,6 +268,7 @@ $translations = array_merge(
     $translations_national,
     $translations_groups,
     $translations_surcharges,
+    $translations_bulk_price,
 );
 
 foreach ($translations as $key => $value) {

@@ -25,6 +25,7 @@ class ModuleInstaller
         $this->installShippingNational();
         $this->installShippingGroups();
         $this->installSurcharges();
+        $this->installBulkPriceChangePreview();
     }
 
     private function installWeight(): void
@@ -357,5 +358,16 @@ class ModuleInstaller
         $this->parent->addConfigurationSelect($prefix . 'ROUND_UP', 'true', 6, 1);
         $this->parent->addConfiguration($prefix . 'ROUND_UP_TO', 0.90, 6, 1, $set_function);
         $this->parent->addConfiguration($prefix . 'END', '', 6, 1, $set_function);
+    }
+
+    public function installBulkPriceChangePreview(): void
+    {
+        $prefix       = Group::BULK_PRICE . '_';
+        $title        = $this->getConfiguration($prefix . 'START_TITLE');
+        $set_function = \grandeljayups::class . '::setFunction(';
+
+        $this->parent->addConfiguration($prefix . 'START', $title, 6, 1, $set_function);
+        $this->parent->addConfiguration($prefix . 'FACTOR', '1', 6, 1, $set_function);
+        $this->parent->addConfiguration($prefix . 'END', $title, 6, 1, $set_function);
     }
 }

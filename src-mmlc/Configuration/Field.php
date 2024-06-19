@@ -268,6 +268,20 @@ class Field
                                     <?php
                                     $shipping_costs = json_decode($value, true);
 
+                                    /** Multiply with factor for preview */
+                                    if (isset($_GET['factor']) && \is_numeric($_GET['factor'])) {
+                                        $factor = (float) $_GET['factor'];
+
+                                        $shipping_costs = \array_map(
+                                            function (array $entry) use ($factor) {
+                                                $entry['weight-costs'] = $entry['weight-costs'] * $factor;
+
+                                                return $entry;
+                                            },
+                                            $shipping_costs
+                                        );
+                                    }
+
                                     asort($shipping_costs);
 
                                     foreach ($shipping_costs as $shipping_cost) {

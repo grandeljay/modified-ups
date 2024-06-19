@@ -11,8 +11,8 @@
  * @phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
  */
 
-use Grandeljay\Ups\{Module, Constants, Quote};
 use Grandeljay\Ups\Configuration\{Group, Configuration};
+use Grandeljay\Ups\{Module, ModuleInstaller, Constants, Quote};
 use RobinTheHood\ModifiedStdModule\Classes\{StdModule, CaseConverter};
 
 /**
@@ -201,6 +201,11 @@ class grandeljayups extends StdModule
     {
         $version_before_update = $this->getVersion();
         $version_after_update  = self::VERSION;
+
+        if (version_compare($version_before_update, '0.9.0', '<=')) {
+            $installer = new ModuleInstaller($this);
+            $installer->installBulkPriceChangePreview();
+        }
 
         if (version_compare($version_before_update, $version_after_update, '<')) {
             $this->setVersion($version_after_update);
