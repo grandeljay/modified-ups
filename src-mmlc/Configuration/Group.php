@@ -38,7 +38,9 @@ class Group
 
     public static function shippingWeightStart(string $value, string $option): string
     {
-        return self::start('<h2>' . $value . '</h2>', $option);
+        $title = \constant($option . '_TITLE');
+
+        return self::start('<h2>' . $title . '</h2>', $option);
     }
 
     public static function shippingWeightEnd(string $value, string $option): string
@@ -53,7 +55,9 @@ class Group
 
     public static function shippingMethodsStart(string $value, string $option): string
     {
-        return self::start('<h2>' . $value . '</h2>', $option);
+        $title = \constant($option . '_TITLE');
+
+        return self::start('<h2>' . $title . '</h2>', $option);
     }
 
     public static function shippingMethodsEnd(string $value, string $option): string
@@ -74,7 +78,9 @@ class Group
 
     public static function shippingStart(string $value, string $option): string
     {
-        return self::start('<h2>' . $value . '</h2>', $option);
+        $title = \constant($option . '_TITLE');
+
+        return self::start('<h2>' . $title . '</h2>', $option);
     }
 
     public static function shippingEnd(string $value, string $option): string
@@ -85,7 +91,9 @@ class Group
     /** Standard */
     public static function shippingStandardStart(string $value, string $option): string
     {
-        return self::start('<h3>' . $value . '</h3>', $option);
+        $title = \constant($option . '_TITLE');
+
+        return self::start('<h3>' . $title . '</h3>', $option);
     }
 
     public static function shippingStandardEnd(string $value, string $option): string
@@ -96,7 +104,9 @@ class Group
     /** Expedited */
     public static function shippingExpeditedStart(string $value, string $option): string
     {
-        return self::start('<h3>' . $value . '</h3>', $option);
+        $title = \constant($option . '_TITLE');
+
+        return self::start('<h3>' . $title . '</h3>', $option);
     }
 
     public static function shippingExpeditedEnd(string $value, string $option): string
@@ -107,7 +117,9 @@ class Group
     /** Saver */
     public static function shippingSaverStart(string $value, string $option): string
     {
-        return self::start('<h3>' . $value . '</h3>', $option);
+        $title = \constant($option . '_TITLE');
+
+        return self::start('<h3>' . $title . '</h3>', $option);
     }
 
     public static function shippingSaverEnd(string $value, string $option): string
@@ -118,7 +130,9 @@ class Group
     /** 12:00 */
     public static function shipping1200Start(string $value, string $option): string
     {
-        return self::start('<h3>' . $value . '</h3>', $option);
+        $title = \constant($option . '_TITLE');
+
+        return self::start('<h3>' . $title . '</h3>', $option);
     }
 
     public static function shipping1200End(string $value, string $option): string
@@ -129,7 +143,9 @@ class Group
     /** Express */
     public static function shippingExpressStart(string $value, string $option): string
     {
-        return self::start('<h3>' . $value . '</h3>', $option);
+        $title = \constant($option . '_TITLE');
+
+        return self::start('<h3>' . $title . '</h3>', $option);
     }
 
     public static function shippingExpressEnd(string $value, string $option): string
@@ -140,7 +156,9 @@ class Group
     /** Plus */
     public static function shippingPlusStart(string $value, string $option): string
     {
-        return self::start('<h3>' . $value . '</h3>', $option);
+        $title = \constant($option . '_TITLE');
+
+        return self::start('<h3>' . $title . '</h3>', $option);
     }
 
     public static function shippingPlusEnd(string $value, string $option): string
@@ -155,7 +173,9 @@ class Group
 
     public static function surchargesStart(string $value, string $option): string
     {
-        return self::start('<h2>' . $value . '</h2>', $option);
+        $title = \constant($option . '_TITLE');
+
+        return self::start('<h2>' . $title . '</h2>', $option);
     }
 
     public static function surchargesEnd(string $value, string $option): string
@@ -170,7 +190,9 @@ class Group
 
     public static function bulkPriceStart(string $value, string $option): string
     {
-        return self::start('<h2>' . $value . '</h2>', $option);
+        $title = \constant($option . '_TITLE');
+
+        return self::start('<h2>' . $title . '</h2>', $option);
     }
 
     public static function bulkPriceEnd(string $value, string $option): string
