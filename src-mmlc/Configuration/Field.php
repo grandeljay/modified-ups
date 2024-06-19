@@ -1371,7 +1371,7 @@ class Field
 
                                         <div class="column">
                                             <div>
-                                            <b><?= constant(Constants::MODULE_SHIPPING_NAME . '_' . Group::SURCHARGES . '_PICK_AND_PACK_COSTS_HEAD_TITLE') ?></b><br>
+                                                <b><?= constant(Constants::MODULE_SHIPPING_NAME . '_' . Group::SURCHARGES . '_PICK_AND_PACK_COSTS_HEAD_TITLE') ?></b><br>
                                                 <?= constant(Constants::MODULE_SHIPPING_NAME . '_' . Group::SURCHARGES . '_PICK_AND_PACK_COSTS_HEAD_DESC') ?>
                                             </div>
                                         </div>
