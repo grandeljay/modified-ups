@@ -106,6 +106,8 @@ class ModuleKeys
     {
         $prefix = Group::BULK_PRICE . '_';
 
+        $this->parent->stdAddKey($prefix . 'START');
         $this->parent->stdAddKey($prefix . 'FACTOR');
+        $this->parent->stdAddKey($prefix . 'END');
     }
 }
