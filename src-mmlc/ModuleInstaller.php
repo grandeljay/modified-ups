@@ -41,7 +41,7 @@ class ModuleInstaller
         $prefix       = Group::SHIPPING_WEIGHT . '_';
         $maximum      = 45;
         $ideal        = 15;
-        $set_function = \grandeljayups::class . '::setFunction';
+        $set_function = \grandeljayups::class . '::setFunction(';
 
         $this->parent->stdAddConfiguration($prefix . 'START', '', 6, 1, $set_function);
         $this->parent->stdAddConfiguration($prefix . 'MAX', $maximum, 6, 1, $set_function);
@@ -58,7 +58,7 @@ class ModuleInstaller
         $method_express      = 'true';
         $method_plus         = 'false';
         $method_expedited    = 'true';
-        $set_function_group  = \grandeljayups::class . '::setFunction';
+        $set_function_group  = \grandeljayups::class . '::setFunction(';
         $set_function_select = 'xtc_cfg_select_option([\'true\', \'false\'], ';
 
         $this->parent->stdAddConfiguration($prefix . 'START', '', 6, 1, $set_function_group);
