@@ -11,8 +11,8 @@
  * @phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
  */
 
-use Grandeljay\Ups\Configuration\{Group, Configuration};
 use Grandeljay\Ups\{Module, ModuleInstaller, Constants, Quote};
+use Grandeljay\Ups\Configuration\Group;
 use RobinTheHood\ModifiedStdModule\Classes\{StdModule, CaseConverter};
 
 /**
