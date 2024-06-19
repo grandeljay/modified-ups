@@ -255,6 +255,7 @@ $translations_bulk_price = [
     Group::BULK_PRICE . '_FACTOR_DESC'          => 'By what factor should the shipping prices be adjusted?',
     Group::BULK_PRICE . '_FACTOR_PREVIEW_TITLE' => 'Preview',
     Group::BULK_PRICE . '_FACTOR_PREVIEW_DESC'  => 'Factor preview is active! Please check all prices and click on "Update" to apply the settings permanently. Otherwise, click on "Cancel".',
+    Group::BULK_PRICE . '_FACTOR_RESET_TITLE'   => 'Reset',
 
     Group::BULK_PRICE . '_END_TITLE'            => '',
     Group::BULK_PRICE . '_END_DESC'             => '',

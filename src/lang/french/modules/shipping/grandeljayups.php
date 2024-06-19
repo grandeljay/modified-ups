@@ -255,6 +255,7 @@ $translations_bulk_price = [
     Group::BULK_PRICE . '_FACTOR_DESC'          => 'De quel facteur les prix d\'expédition doivent-ils être adaptés ?',
     Group::BULK_PRICE . '_FACTOR_PREVIEW_TITLE' => 'Aperçu',
     Group::BULK_PRICE . '_FACTOR_PREVIEW_DESC'  => 'L\'aperçu des facteurs est actif ! Veuillez vérifier tous les prix et cliquer sur "Actualiser" afin d\'appliquer les paramètres de manière permanente. Dans le cas contraire, clique sur "Annuler".',
+    Group::BULK_PRICE . '_FACTOR_RESET_TITLE'   => 'Réinitialiser',
 
     Group::BULK_PRICE . '_END_TITLE'            => '',
     Group::BULK_PRICE . '_END_DESC'             => '',

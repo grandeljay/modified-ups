@@ -255,6 +255,7 @@ $translations_bulk_price = [
     Group::BULK_PRICE . '_FACTOR_DESC'          => 'In base a quale fattore dovrebbero essere adeguati i prezzi di spedizione?',
     Group::BULK_PRICE . '_FACTOR_PREVIEW_TITLE' => 'Anteprima',
     Group::BULK_PRICE . '_FACTOR_PREVIEW_DESC'  => 'L\'anteprima del fattore è attiva! Controllare tutti i prezzi e fare clic su "Aggiorna" per applicare le impostazioni in modo permanente. Altrimenti, fare clic su "Annulla".',
+    Group::BULK_PRICE . '_FACTOR_RESET_TITLE'   => 'Reset',
 
     Group::BULK_PRICE . '_END_TITLE'            => '',
     Group::BULK_PRICE . '_END_DESC'             => '',

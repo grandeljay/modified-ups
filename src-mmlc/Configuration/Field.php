@@ -1422,24 +1422,30 @@ class Field
     {
         $page               = \xtc_href_link_admin(\DIR_ADMIN . \FILENAME_MODULES);
         $factor             = $_GET['factor'] ?? 1;
-            [
-                'set'    => $_GET['set'],
-                'module' => $_GET['module'],
-                'action' => $_GET['action'],
-                'factor' => $factor,
-            ]
+        $reset_parameters   = [
+            'set'    => $_GET['set'],
+            'module' => $_GET['module'],
+            'action' => $_GET['action'],
+        ];
+        $reset_href         = $page . '?' . \http_build_query($reset_parameters);
+        $preview_parameters = \http_build_query(
+            \array_merge(
+                $reset_parameters,
+                ['factor' => $factor]
+            )
         );
-        $preview_parameters = \array_merge($reset_parameters, ['factor' => $factor]);
         $preview_href       = $page . '?' . $preview_parameters;
 
         $text_preview_title = \constant(Constants::MODULE_SHIPPING_NAME . '_' . Group::BULK_PRICE . '_FACTOR_PREVIEW_TITLE');
         $text_preview_desc  = \constant(Constants::MODULE_SHIPPING_NAME . '_' . Group::BULK_PRICE . '_FACTOR_PREVIEW_DESC');
+        $text_reset_title   = \constant(Constants::MODULE_SHIPPING_NAME . '_' . Group::BULK_PRICE . '_FACTOR_RESET_TITLE');
 
         \ob_start();
         ?>
         <input type="number" name="factor" value="<?= $factor ?>" step="any">
 
-        <a href="<?= $preview_href ?>" class="button" id="factor-preview"><?= $text_preview_title ?></a>
+        <a class="button" href="<?= $preview_href ?>" id="factor-preview"><?= $text_preview_title ?></a>
+        <a class="button" href="<?= $reset_href ?>"><?= $text_reset_title ?></a>
 
         <?php if (isset($_GET['factor'])) { ?>
             <p><?= $text_preview_desc ?></p>
