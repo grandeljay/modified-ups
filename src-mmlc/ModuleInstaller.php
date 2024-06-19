@@ -39,12 +39,11 @@ class ModuleInstaller
     private function installWeight(): void
     {
         $prefix       = Group::SHIPPING_WEIGHT . '_';
-        $title        = $this->getConfiguration(Group::SHIPPING_WEIGHT . '_START_TITLE');
         $maximum      = 45;
         $ideal        = 15;
         $set_function = \grandeljayups::class . '::setFunction';
 
-        $this->parent->stdAddConfiguration($prefix . 'START', $title, 6, 1, $set_function);
+        $this->parent->stdAddConfiguration($prefix . 'START', '', 6, 1, $set_function);
         $this->parent->stdAddConfiguration($prefix . 'MAX', $maximum, 6, 1, $set_function);
         $this->parent->stdAddConfiguration($prefix . 'IDEAL', $ideal, 6, 1, $set_function);
         $this->parent->stdAddConfiguration($prefix . 'END', '', 6, 1, $set_function);
@@ -53,7 +52,6 @@ class ModuleInstaller
     private function installMethods(): void
     {
         $prefix              = Group::SHIPPING_METHODS . '_';
-        $title               = $this->getConfiguration(Group::SHIPPING_METHODS . '_START_TITLE');
         $method_standard     = 'true';
         $method_saver        = 'true';
         $method_1200         = 'true';
@@ -63,7 +61,7 @@ class ModuleInstaller
         $set_function_group  = \grandeljayups::class . '::setFunction';
         $set_function_select = 'xtc_cfg_select_option([\'true\', \'false\'], ';
 
-        $this->parent->stdAddConfiguration($prefix . 'START', $title, 6, 1, $set_function_group);
+        $this->parent->stdAddConfiguration($prefix . 'START', '', 6, 1, $set_function_group);
         $this->parent->stdAddConfiguration($prefix . 'STANDARD', $method_standard, 6, 1, $set_function_select);
         $this->parent->stdAddConfiguration($prefix . 'SAVER', $method_saver, 6, 1, $set_function_select);
         $this->parent->stdAddConfiguration($prefix . '1200', $method_1200, 6, 1, $set_function_select);
@@ -76,12 +74,11 @@ class ModuleInstaller
     private function installShippingNational(): void
     {
         $prefix       = Group::SHIPPING_NATIONAL . '_';
-        $title        = $this->getConfiguration($prefix . 'START_TITLE');
         $country      = \STORE_COUNTRY;
         $costs        = Field::getShippingNationalMethodCosts();
         $set_function = \grandeljayups::class . '::setFunction(';
 
-        $this->parent->stdAddConfiguration($prefix . 'START', $title, 6, 1, $set_function);
+        $this->parent->stdAddConfiguration($prefix . 'START', '', 6, 1, $set_function);
         $this->parent->stdAddConfiguration($prefix . 'COUNTRY', $country, 6, 1, $set_function);
 
         foreach (\grandeljayups::$methods[Group::SHIPPING_NATIONAL] as $method_name) {
@@ -114,12 +111,11 @@ class ModuleInstaller
     private function installShippingGroupA(): void
     {
         $prefix       = Group::SHIPPING_GROUP_A . '_';
-        $title        = $this->getConfiguration($prefix . 'START_TITLE');
         $countries    = 'AT, BE, CZ, HU, LU, NL, PL';
         $costs        = Field::getShippingCountryGroupACosts();
         $set_function = \grandeljayups::class . '::setFunction(';
 
-        $this->parent->stdAddConfiguration($prefix . 'START', $title, 6, 1, $set_function);
+        $this->parent->stdAddConfiguration($prefix . 'START', '', 6, 1, $set_function);
         $this->parent->stdAddConfiguration($prefix . 'COUNTRIES', $countries, 6, 1);
 
         foreach (\grandeljayups::$methods[Group::SHIPPING_GROUP_A] as $method_name) {
@@ -142,12 +138,11 @@ class ModuleInstaller
     private function installShippingGroupB(): void
     {
         $prefix       = Group::SHIPPING_GROUP_B . '_';
-        $title        = $this->getConfiguration($prefix . 'START_TITLE');
         $countries    = 'DK, ES, FR, HR, IT, RO, SI, PT';
         $costs        = Field::getShippingCountryGroupBCosts();
         $set_function = \grandeljayups::class . '::setFunction(';
 
-        $this->parent->stdAddConfiguration($prefix . 'START', $title, 6, 1, $set_function);
+        $this->parent->stdAddConfiguration($prefix . 'START', '', 6, 1, $set_function);
         $this->parent->stdAddConfiguration($prefix . 'COUNTRIES', $countries, 6, 1);
 
         foreach (\grandeljayups::$methods[Group::SHIPPING_GROUP_B] as $method_name) {
@@ -170,12 +165,11 @@ class ModuleInstaller
     private function installShippingGroupC(): void
     {
         $prefix       = Group::SHIPPING_GROUP_C . '_';
-        $title        = $this->getConfiguration($prefix . 'START_TITLE');
         $countries    = 'BG, CY, EE, FI, GR, IC, IE, LT, LV, MT, SE, SK';
         $costs        = Field::getShippingCountryGroupCCosts();
         $set_function = \grandeljayups::class . '::setFunction(';
 
-        $this->parent->stdAddConfiguration(Group::SHIPPING_GROUP_C . '_START', $title, 6, 1, $set_function);
+        $this->parent->stdAddConfiguration(Group::SHIPPING_GROUP_C . '_START', '', 6, 1, $set_function);
         $this->parent->stdAddConfiguration(Group::SHIPPING_GROUP_C . '_COUNTRIES', $countries, 6, 1);
 
         foreach (\grandeljayups::$methods[Group::SHIPPING_GROUP_C] as $method_name) {
@@ -198,12 +192,11 @@ class ModuleInstaller
     private function installShippingGroupD(): void
     {
         $prefix       = Group::SHIPPING_GROUP_D . '_';
-        $title        = $this->getConfiguration($prefix . 'START_TITLE');
         $countries    = 'AD, CH, GB, GG, JE, NO, SM';
         $costs        = Field::getShippingCountryGroupDCosts();
         $set_function = \grandeljayups::class . '::setFunction(';
 
-        $this->parent->stdAddConfiguration($prefix . 'START', $title, 6, 1, $set_function);
+        $this->parent->stdAddConfiguration($prefix . 'START', '', 6, 1, $set_function);
         $this->parent->stdAddConfiguration($prefix . 'COUNTRIES', $countries, 6, 1);
 
         foreach (\grandeljayups::$methods[Group::SHIPPING_GROUP_D] as $method_name) {
@@ -226,12 +219,11 @@ class ModuleInstaller
     private function installShippingGroupE(): void
     {
         $prefix       = Group::SHIPPING_GROUP_E . '_';
-        $title        = $this->getConfiguration($prefix . 'START_TITLE');
         $countries    = 'AE, BA, CA, CN, HK, IN, JP, KV, MD, ME, MK, MX, RS, SA, SG, TR, TW, UA, US, VN';
         $costs        = Field::getShippingCountryGroupECosts();
         $set_function = \grandeljayups::class . '::setFunction(';
 
-        $this->parent->stdAddConfiguration($prefix . 'START', $title, 6, 1, $set_function);
+        $this->parent->stdAddConfiguration($prefix . 'START', '', 6, 1, $set_function);
         $this->parent->stdAddConfiguration($prefix . 'COUNTRIES', $countries, 6, 1);
 
         foreach (\grandeljayups::$methods[Group::SHIPPING_GROUP_E] as $method_name) {
@@ -254,11 +246,10 @@ class ModuleInstaller
     private function installShippingGroupF(): void
     {
         $prefix       = Group::SHIPPING_GROUP_F . '_';
-        $title        = $this->getConfiguration($prefix . 'START_TITLE');
         $costs        = Field::getShippingCountryGroupFCosts();
         $set_function = \grandeljayups::class . '::setFunction(';
 
-        $this->parent->stdAddConfiguration($prefix . 'START', $title, 6, 1, $set_function);
+        $this->parent->stdAddConfiguration($prefix . 'START', '', 6, 1, $set_function);
         $this->parent->stdAddConfiguration($prefix . 'COUNTRIES', '', 6, 1);
 
         foreach (\grandeljayups::$methods[Group::SHIPPING_GROUP_F] as $method_name) {
@@ -281,7 +272,6 @@ class ModuleInstaller
     private function installSurcharges(): void
     {
         $prefix       = Group::SURCHARGES . '_';
-        $title        = $this->getConfiguration($prefix . 'START_TITLE');
         $set_function = \grandeljayups::class . '::setFunction(';
 
         $surcharges    = json_encode(
@@ -360,7 +350,7 @@ class ModuleInstaller
             ],
         );
 
-        $this->parent->stdAddConfiguration($prefix . 'START', $title, 6, 1, $set_function);
+        $this->parent->stdAddConfiguration($prefix . 'START', '', 6, 1, $set_function);
         $this->parent->stdAddConfiguration($prefix . 'SURCHARGES', $surcharges, 6, 1, $set_function);
         $this->parent->stdAddConfiguration($prefix . 'PICK_AND_PACK', $pick_and_pack, 6, 1, $set_function);
         $this->parent->stdAddConfigurationSelect($prefix . 'ROUND_UP', 'true', 6, 1);
@@ -371,10 +361,9 @@ class ModuleInstaller
     public function installBulkPriceChangePreview(): void
     {
         $prefix       = Group::BULK_PRICE . '_';
-        $title        = $this->getConfiguration($prefix . 'START_TITLE');
         $set_function = \grandeljayups::class . '::setFunction(';
 
-        $this->parent->stdAddConfiguration($prefix . 'START', $title, 6, 1, $set_function);
+        $this->parent->stdAddConfiguration($prefix . 'START', '', 6, 1, $set_function);
         $this->parent->stdAddConfiguration($prefix . 'FACTOR', '1', 6, 1, $set_function);
         $this->parent->stdAddConfiguration($prefix . 'END', '', 6, 1, $set_function);
     }
