@@ -6,11 +6,52 @@ use Grandeljay\Ups\Constants;
 
 class Field
 {
+    public static function applyBulkPriceChangeKgMin(string $value, string $option): float
+    {
+        $value = (float) $value;
+
+        if (!isset($_GET['factor']) || !\is_numeric($_GET['factor'])) {
+            return $value;
+        }
+
+        if ('_KG' !== \substr($option, -3) && '_MIN' !== \substr($option, -4)) {
+            return $value;
+        }
+
+        $factor = (float) $_GET['factor'];
+
+        $value = $value * $factor;
+
+        return $value;
+    }
+
+    public static function applyBulkPriceChangeShipping(array $shipping_costs): array
+    {
+        if (!isset($_GET['factor']) || !\is_numeric($_GET['factor'])) {
+            return $shipping_costs;
+        }
+
+        $factor = (float) $_GET['factor'];
+
+        $shipping_costs = \array_map(
+            function (array $entry) use ($factor) {
+                $entry['weight-costs'] = $entry['weight-costs'] * $factor;
+
+                return $entry;
+            },
+            $shipping_costs
+        );
+
+        return $shipping_costs;
+    }
+
     /**
      * Number type for option inputs
      */
     public static function inputNumber(string $value, string $option): string
     {
+        $value = self::applyBulkPriceChangeKgMin($value, $option);
+
         $html  = '';
         $html .= xtc_draw_input_field(
             'configuration[' . $option . ']',
@@ -267,20 +308,7 @@ class Field
 
                                     <?php
                                     $shipping_costs = json_decode($value, true);
-
-                                    /** Multiply with factor for preview */
-                                    if (isset($_GET['factor']) && \is_numeric($_GET['factor'])) {
-                                        $factor = (float) $_GET['factor'];
-
-                                        $shipping_costs = \array_map(
-                                            function (array $entry) use ($factor) {
-                                                $entry['weight-costs'] = $entry['weight-costs'] * $factor;
-
-                                                return $entry;
-                                            },
-                                            $shipping_costs
-                                        );
-                                    }
+                                    $shipping_costs = self::applyBulkPriceChangeShipping($shipping_costs);
 
                                     asort($shipping_costs);
 
