@@ -15,7 +15,13 @@ class Group
             $key_lisp,
         ];
 
-        if (isset($_GET['factor']) && ('shipping-group-' === \substr($key_lisp, 0, 15) || 'bulk-price-start' === $key_lisp)) {
+        if (
+            isset($_GET['factor']) && (
+                   'shipping-group-'    === \substr($key_lisp, 0, 15)
+                || 'shipping-national-' === \substr($key_lisp, 0, 18)
+                || \in_array($key_lisp, ['bulk-price-start'])
+            )
+        ) {
             $classes[] = 'factor-active';
         }
 
