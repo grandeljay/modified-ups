@@ -253,6 +253,10 @@ class Field
         $value = html_entity_decode($value, ENT_QUOTES | ENT_HTML5);
         $group = substr($option, 0, -6);
 
+        $shipping_costs = \json_decode($value, \true);
+        $shipping_costs = self::applyBulkPriceChangeShipping($shipping_costs);
+        $value          = \json_encode($shipping_costs);
+
         $html  = '';
         $html .= xtc_draw_input_field(
             'configuration[' . $option . ']',
@@ -307,9 +311,6 @@ class Field
                                     </div>
 
                                     <?php
-                                    $shipping_costs = json_decode($value, true);
-                                    $shipping_costs = self::applyBulkPriceChangeShipping($shipping_costs);
-
                                     asort($shipping_costs);
 
                                     foreach ($shipping_costs as $shipping_cost) {
