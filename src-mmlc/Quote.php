@@ -55,48 +55,6 @@ class Quote
         return $methods;
     }
 
-    private function addDebugOutput(array &$methods): void
-    {
-
-        $debug_is_enabled = Configuration::get('DEBUG_ENABLE');
-        $user_is_admin    = isset($_SESSION['customers_status']['customers_status_id']) && 0 === (int) $_SESSION['customers_status']['customers_status_id'];
-
-        if ('true' === $debug_is_enabled && $user_is_admin) {
-            foreach ($methods as &$method) {
-                $total = 0;
-
-                ob_start();
-                ?>
-                <br><br>
-
-                <h3>Debug mode</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Item</th>
-                            <th>Costs</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <?php foreach ($method['calculations'] as $calculation) { ?>
-                            <?php $total += $calculation['costs']; ?>
-
-                            <tr>
-                                <td><?= $calculation['item'] ?></td>
-                                <td><?= \sprintf('%01.2f', $calculation['costs']) ?></td>
-                                <td><?= \sprintf('%01.2f', $total) ?></td>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-                <?php
-                $method['title'] .= ob_get_clean();
-            }
-        }
-    }
-
     public function getQuote(string $method_id): ?array
     {
         if (empty($this->methods)) {
@@ -118,11 +76,6 @@ class Quote
 
             $methods = $surcharges->getMethods();
         }
-
-        /**
-         * Output debug
-         */
-        $this->addDebugOutput($methods);
 
         $quote = [
             'id'      => \grandeljayups::class,

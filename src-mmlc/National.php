@@ -107,21 +107,15 @@ class National extends Method
             $method_id                 = CaseConverter::screamingToLisp($method_name);
             $method_type               = Configuration::get('SHIPPING_METHOD_' . $method_name);
             $method_type_description   = Configuration::get(Group::SHIPPING_NATIONAL . '_START_TITLE');
-            $method_format             = 'UPS %1$s (%2$s)' . '<!-- BREAK -->' . '<strong>UPS %1$s</strong><br>%3$s';
-            $method_weight             = $this->weight_formatted;
             $method_costs_calculations = $this->getCostsAndCalculations($method_name);
-            $method_title              = sprintf(
-                $method_format,
-                $method_type,
-                $method_weight,
-                $method_type_description
-            );
 
             $method    = [
-                'id'           => $method_id,
-                'title'        => $method_title,
-                'cost'         => $method_costs_calculations['costs'],
-                'calculations' => $method_costs_calculations['calculations'],
+                'id'               => $method_id,
+                'title'            => $method_type,
+                'description'      => $method_type_description,
+                'cost'             => $method_costs_calculations['costs'],
+                'calculations'     => $method_costs_calculations['calculations'],
+                'weight_formatted' => $this->weight_formatted,
             ];
             $methods[] = $method;
         }
