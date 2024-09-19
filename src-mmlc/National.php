@@ -95,6 +95,10 @@ class National extends Method
     {
         $methods = [];
 
+        if ($this->exceedsMaximumWeight()) {
+            return [];
+        }
+
         foreach (self::getMethodNames() as $method_name) {
             if (!Method::isEnabled($method_name)) {
                 continue;

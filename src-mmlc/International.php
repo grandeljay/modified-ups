@@ -142,6 +142,10 @@ class International extends Method
     {
         $methods = [];
 
+        if ($this->exceedsMaximumWeight()) {
+            return [];
+        }
+
         $method_groups      = self::getShippingGroups();
         $method_group_name  = self::getShippingGroupName();
         $method_group_names = $method_groups[$method_group_name];

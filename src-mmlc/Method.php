@@ -41,6 +41,27 @@ class Method
         $this->weight_formatted = $order_packer->getWeightFormatted();
     }
 
+    public function exceedsMaximumWeight(): bool
+    {
+        global $order;
+
+        if (null === $order) {
+            return true;
+        }
+
+        $shipping_weight_max = Configuration::get(Group::SHIPPING_WEIGHT . '_MAX');
+
+        foreach ($this->boxes as $box) {
+            $box_weight = $box->getWeightWithoutAttributes();
+
+            if ($box_weight > $shipping_weight_max) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function isNational(): bool
     {
         global $order;

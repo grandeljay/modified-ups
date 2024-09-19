@@ -20,25 +20,6 @@ class Quote
         $this->methods = $this->getShippingMethods();
     }
 
-    public function exceedsMaximumWeight(): bool
-    {
-        global $order;
-
-        if (null === $order) {
-            return true;
-        }
-
-        $shipping_weight_max = Configuration::get(Group::SHIPPING_WEIGHT . '_MAX');
-
-        foreach ($order->products as $product) {
-            if ($product['weight'] >= $shipping_weight_max) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private function getShippingMethods(): array
     {
         $methods = [];
@@ -118,7 +99,7 @@ class Quote
 
     public function getQuote(string $method_id): ?array
     {
-        if (empty($this->methods) || $this->exceedsMaximumWeight()) {
+        if (empty($this->methods)) {
             return null;
         }
 

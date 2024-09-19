@@ -269,7 +269,7 @@ class grandeljayups extends StdModule
         $quote  = new Quote(Constants::MODULE_SHIPPING_NAME);
         $quotes = $quote->getQuote($method_id);
 
-        if (is_array($quotes) && !$quote->exceedsMaximumWeight()) {
+        if (is_array($quotes)) {
             $this->quotes = $quotes;
         }
 
