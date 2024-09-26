@@ -248,6 +248,9 @@ class Field
         return $national_costs;
     }
 
+    /**
+     * Groups
+     */
     public static function shippingMethodCosts(string $value, string $option): string
     {
         $value = html_entity_decode($value, ENT_QUOTES | ENT_HTML5);
