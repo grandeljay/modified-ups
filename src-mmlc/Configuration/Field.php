@@ -361,7 +361,12 @@ class Field
     {
         $html = '';
 
-        $html .= \xtc_draw_input_field($option, $value);
+        $configuration_key = \sprintf(
+            'configuration[%s]',
+            $option
+        );
+
+        $html .= \xtc_draw_input_field($configuration_key, $value);
 
         return $html;
     }

@@ -62,6 +62,7 @@ class ModuleUninstaller
             $this->parent->stdRemoveConfiguration($method . '_COSTS');
             $this->parent->stdRemoveConfiguration($method . '_KG');
             $this->parent->stdRemoveConfiguration($method . '_MIN');
+            $this->parent->stdRemoveConfiguration($method . '_EXCLUDED');
             $this->parent->stdRemoveConfiguration($method . '_END');
         }
 
@@ -81,6 +82,7 @@ class ModuleUninstaller
                 $this->parent->stdRemoveConfiguration($method_group . '_COSTS');
                 $this->parent->stdRemoveConfiguration($method_group . '_KG');
                 $this->parent->stdRemoveConfiguration($method_group . '_MIN');
+                $this->parent->stdRemoveConfiguration($method_group . '_EXCLUDED');
                 $this->parent->stdRemoveConfiguration($method_group . '_END');
             }
 

@@ -61,6 +61,7 @@ class ModuleKeys
             $this->parent->stdAddKey($method . '_COSTS');
             $this->parent->stdAddKey($method . '_KG');
             $this->parent->stdAddKey($method . '_MIN');
+            $this->parent->stdAddKey($method . '_EXCLUDED');
             $this->parent->stdAddKey($method . '_END');
         }
 
@@ -83,6 +84,7 @@ class ModuleKeys
                 $this->parent->stdAddKey($method_group . '_COSTS');
                 $this->parent->stdAddKey($method_group . '_KG');
                 $this->parent->stdAddKey($method_group . '_MIN');
+                $this->parent->stdAddKey($method_group . '_EXCLUDED');
                 $this->parent->stdAddKey($method_group . '_END');
             }
 

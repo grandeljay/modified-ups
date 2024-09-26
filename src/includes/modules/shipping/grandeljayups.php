@@ -103,13 +103,8 @@ class grandeljayups extends StdModule
         }
         /** */
 
-        /** Exceptions */
+        /** Methods */
         if (!method_exists($namespace_configuration, $method_name)) {
-            /** Numbers */
-            if (is_numeric($value)) {
-                $method_name = 'inputNumber';
-            }
-
             /** Methods */
             $option_short = substr($option, strlen(Constants::MODULE_SHIPPING_NAME) + 1);
             $methods      = [
@@ -143,7 +138,18 @@ class grandeljayups extends StdModule
         if (1 === preg_match('/^shipping(National|Group[A|B|C|D|E|F])[a-zA-Z0-9]+Costs$/', $method_name)) {
             $method_name = 'shippingMethodCosts';
         }
+
+        if (1 === preg_match('/^shipping(National|Group[A|B|C|D|E|F])[a-zA-Z0-9]+Excluded$/', $method_name)) {
+            $method_name = 'shippingMethodExcluded';
+        }
         /** */
+
+        /** Exceptions */
+        if (!method_exists($namespace_configuration, $method_name)) {
+            if (is_numeric($value)) {
+                $method_name = 'inputNumber';
+            }
+        }
 
         /** Run method */
         if (method_exists($namespace_configuration, $method_name)) {

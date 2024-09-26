@@ -22,6 +22,26 @@ class Method
         return $method_is_enabled;
     }
 
+    public static function isExcluded(string $method_name): bool
+    {
+        $method_excluded_postal_codes = \explode(
+            ',',
+            Configuration::get('SHIPPING_' . $method_name . '_EXCLUDED')
+        );
+        $method_excluded_postal_codes = \array_map('trim', $method_excluded_postal_codes);
+        $method_excluded_postal_codes = \array_filter($method_excluded_postal_codes);
+
+        global $order;
+
+        $delivery_postal_code = $order->delivery['postcode'];
+
+        if (\in_array($delivery_postal_code, $method_excluded_postal_codes)) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function __construct()
     {
     }

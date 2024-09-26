@@ -104,6 +104,10 @@ class National extends Method
                 continue;
             }
 
+            if (Method::isExcluded('NATIONAL_' . $method_name)) {
+                continue;
+            }
+
             $method_id                 = CaseConverter::screamingToLisp($method_name);
             $method_type               = Configuration::get('SHIPPING_METHOD_' . $method_name);
             $method_type_description   = Configuration::get(Group::SHIPPING_NATIONAL . '_START_TITLE');

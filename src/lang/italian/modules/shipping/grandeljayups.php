@@ -139,6 +139,9 @@ foreach (grandeljayups::$methods[Group::SHIPPING_NATIONAL] as $method_name) {
     $translations_national[$method_group . '_MIN_TITLE']   = 'Tariffa minima per pacchetto';
     $translations_national[$method_group . '_MIN_DESC']    = 'La spedizione non viene mai offerta al di sotto di questo prezzo.';
 
+    $translations_groups[$method_group . '_EXCLUDED_TITLE'] = 'Codici postali esclusi';
+    $translations_groups[$method_group . '_EXCLUDED_DESC']  = 'Questo metodo di spedizione è nascosto se il cliente ha inserito uno dei codici postali elencati nell\'indirizzo di spedizione.';
+
     $translations_national[$method_group . '_WEIGHT_HEAD_TITLE'] = 'Peso';
     $translations_national[$method_group . '_WEIGHT_HEAD_DESC']  = 'Peso massimo consentito (in kg) per questo prezzo.';
     $translations_national[$method_group . '_COSTS_HEAD_TITLE']  = 'Costi';
@@ -183,6 +186,9 @@ foreach (grandeljayups::$methods_international as $group) {
         $translations_groups[$method_group . '_KG_DESC']     = 'Si applica solo a partire dal peso massimo definito (ad esempio, 20 kg).';
         $translations_groups[$method_group . '_MIN_TITLE']   = 'Tariffa minima per pacchetto';
         $translations_groups[$method_group . '_MIN_DESC']    = 'La spedizione non viene mai offerta al di sotto di questo prezzo.';
+
+        $translations_groups[$method_group . '_EXCLUDED_TITLE'] = 'Codici postali esclusi';
+        $translations_groups[$method_group . '_EXCLUDED_DESC']  = 'Questo metodo di spedizione è nascosto se il cliente ha inserito uno dei codici postali elencati nell\'indirizzo di spedizione.';
 
         $translations_groups[$method_group . '_WEIGHT_HEAD_TITLE'] = 'Peso';
         $translations_groups[$method_group . '_WEIGHT_HEAD_DESC']  = 'Peso massimo consentito (in kg) per questo prezzo.';

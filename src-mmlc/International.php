@@ -155,6 +155,10 @@ class International extends Method
                 continue;
             }
 
+            if (Method::isExcluded('INTERNATIONAL_' . $method_name)) {
+                continue;
+            }
+
             $method_id                 = CaseConverter::screamingToLisp($method_name);
             $method_type               = Configuration::get('SHIPPING_METHOD_' . $method_name);
             $method_type_description   = Configuration::get($method_group_name . '_START_TITLE');
