@@ -249,7 +249,7 @@ class Field
     }
 
     /**
-     * Groups
+     * Shipping costs for National and International (groups) methods.
      */
     public static function shippingMethodCosts(string $value, string $option): string
     {
@@ -348,6 +348,20 @@ class Field
         </dialog>
         <?php
         $html .= ob_get_clean();
+
+        return $html;
+    }
+
+    /**
+     * Excluded postal codes for National and International (groups) methods.
+     *
+     * @return string
+     */
+    public static function shippingMethodExcluded(string $value, string $option): string
+    {
+        $html = '';
+
+        $html .= \xtc_draw_input_field($option, $value);
 
         return $html;
     }
