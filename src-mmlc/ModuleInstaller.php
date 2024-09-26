@@ -11,14 +11,6 @@ class ModuleInstaller
     {
     }
 
-    private function getConfiguration(string $name): string
-    {
-        $constant = Constants::MODULE_SHIPPING_NAME . '_' . $name;
-        $value    = \constant($constant);
-
-        return $value;
-    }
-
     public function install(): void
     {
         /**
