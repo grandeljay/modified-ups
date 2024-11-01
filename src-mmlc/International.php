@@ -155,7 +155,7 @@ class International extends Method
                 continue;
             }
 
-            if (Method::isExcluded('INTERNATIONAL_' . $method_name)) {
+            if (Method::isExcluded($method_group_name . '_' . $method_name)) {
                 continue;
             }
 

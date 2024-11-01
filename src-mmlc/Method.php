@@ -26,7 +26,7 @@ class Method
     {
         $method_excluded_postal_codes = \explode(
             ',',
-            Configuration::get('SHIPPING_' . $method_name . '_EXCLUDED')
+            Configuration::get($method_name . '_EXCLUDED')
         );
         $method_excluded_postal_codes = \array_map('trim', $method_excluded_postal_codes);
         $method_excluded_postal_codes = \array_filter($method_excluded_postal_codes);

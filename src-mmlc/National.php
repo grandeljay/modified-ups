@@ -104,7 +104,7 @@ class National extends Method
                 continue;
             }
 
-            if (Method::isExcluded('NATIONAL_' . $method_name)) {
+            if (Method::isExcluded('SHIPPING_NATIONAL_' . $method_name)) {
                 continue;
             }
 
